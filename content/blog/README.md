@@ -1,3 +1,13 @@
+# Multitrack Player
+_TODO_
+
+# Keys In-ear Mixes
+_TODO_
+
+# Fortnite Highlights
+_TODO_
+
+
 # Next Level Hexagon 2018
 _15th April 2018_
 
@@ -92,7 +102,7 @@ This year my wife and I have started watching daily vlogs by <a href="https://ww
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Lvie4pTut64" frameborder="0" allowfullscreen></iframe>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/K64dJ_lKNnE" frameborder="0" allowfullscreen></iframe>
-	
+  
 
 # Church Worship Backgrounds
 _29th November 2015_
@@ -179,7 +189,7 @@ Each year Southampton CU runs a week of events in February. To promote the week 
 
 A slight parallax effect and embedded fonts were some of the new techniques I used when producing the site. 
 
-You can view the website and watch the video <a href="http://dhulme.co.uk/portfolio/southampton-cu-events-week/">here</a>.
+You can view the website and watch the video <a href="http://dhulme.co.uk/southampton-cu-events-week/">here</a>.
 
 ![Events Week Website](./images/events-week-website.jpg)
 
@@ -187,7 +197,7 @@ You can view the website and watch the video <a href="http://dhulme.co.uk/portfo
 
 # Cisco &#8211; Kit list
 _13th September 2013_
-The Cisco Kit list was an extension project I took on after finishing the <a title="Cisco – TelePrescence Tools Management Database" href="http://dhulme.co.uk/cisco-teleprescence-tools-management-database/">TDTM</a>. I chose to develop the project using <a title="Node.js" href="http://nodejs.org/">Node.js</a>, a web technology with which I was unfamiliar, but interested in. The project was a great success, and I was able to see it being used by the team before the completion of my internship.
+The Cisco Kit list was an extension project I took on after finishing the TDTM. I chose to develop the project using <a title="Node.js" href="http://nodejs.org/">Node.js</a>, a web technology with which I was unfamiliar, but interested in. The project was a great success, and I was able to see it being used by the team before the completion of my internship.
 
 Users of the Kit list could add TelePresence devices to the system using an IP address. Detailed information about the device would then be fetched using system.xml (a public XML file available on the device), and <a href="http://xmlrpc.scripting.com/default.html">XML RPC</a> calls. Using this information, users could book a specific device for a set amount of time.
 
@@ -214,7 +224,7 @@ _11th September 2013_
 
 I produced a Freshers&#8217; week website for Southampton University Christian Union. The design and theme was based around existing design work I had produced for the week.
 
-All the CSS, layouts and images were custom produced. I took inspiration from the new &#8216;scrolling&#8217; style of website that developers are using. You can view the website <a href="http://dhulme.co.uk/portfolio/southampton-cu-freshers/">here</a>.</p>
+All the CSS, layouts and images were custom produced. I took inspiration from the new &#8216;scrolling&#8217; style of website that developers are using. You can view the website <a href="http://dhulme.co.uk/southampton-cu-freshers/">here</a>.</p>
 
 ![Freshers website](./images/freshers.png)
 

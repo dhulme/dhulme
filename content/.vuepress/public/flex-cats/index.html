@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Flex Cats</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			margin: 1rem;
+		}
+
+		.controls {
+			display: flex;
+			margin-bottom: 1rem;
+			justify-content: space-between;
+		}
+
+		.controls label {
+			display: block;
+			margin-bottom: .25rem;
+		}
+
+		.container {
+			height: 90vh;
+			border: 1px solid lightgray;
+		}
+	</style>
+</head>
+<body>
+	<div id="app"></div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			data: () => ({
+				childCount: 3,
+				flexDirection: 'row',
+				alignItems: 'flex-start',
+				alignContent: 'flex-start',
+				justifyContent: 'flex-start',
+				flexWrap: 'no-wrap'
+			}),
+			components: {
+				Select: {
+					props: ['label', 'values', 'value'],
+					template: `
+						<div>
+							<label :for="label">{{ label }}</label>
+							<select :id="label" :value="value" @input="$emit('input', $event.target.value)"><option v-for="value in values">{{ value }}</option></select>
+						</div>`	
+				}
+			},
+			template: `
+				<div>
+					<div class="controls">
+						<Select label="flexDirection" :values="['row', 'column']" v-model="flexDirection" />
+						<Select label="alignItems" :values="['flex-start', 'flex-end', 'center']" v-model="alignItems" />
+						<Select label="justifyContent" :values="['flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly']" v-model="justifyContent" />
+						
+						<div>
+							<label>Items</label>
+							<input type="text" v-model="childCount" :style="{ width: '3rem' }" />
+						</div>
+
+						<Select label="alignContent" :values="['flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around']" v-model="alignContent" />
+						<Select label="flexWrap" :values="['nowrap', 'wrap', 'wrap-reverse']" v-model="flexWrap" />
+					</div>
+					<div class="container" :style="{
+						display: 'flex',
+						alignItems,
+						alignContent,
+						justifyContent,
+						flexFlow: flexDirection + ' ' + flexWrap,
+					}">
+						<div v-for="n in parseInt(childCount)"><img src="https://placekitten.com/200/200" /></div>
+					</div>
+				</div>
+			`
+		})
+	</script>
+
+</body>
+</html>

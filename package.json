@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "vuepress dev content",
-		"build": "vuepress build content",
-		"deploy": "node deploy"
+    "build": "vuepress build content",
+    "deploy": "node deploy"
   },
   "repository": {
     "type": "git",

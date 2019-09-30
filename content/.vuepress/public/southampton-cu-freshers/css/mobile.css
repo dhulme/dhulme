@@ -1,0 +1,301 @@
+﻿/* General */
+
+h1 {
+  margin-top: 30px;
+  font-size: 80px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+body {
+  background-color: #007e94;
+}
+
+.text {
+  color: #FFFFFF;
+  font-family: Helvetica, Arial;
+}
+
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+/* Welcome page */
+
+#logo {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-top: -129px;
+  margin-left: -410px;
+}
+
+#videoContainer {
+  height: 337px;
+  width: 600px;
+}
+
+#videoContainer p {
+  position: absolute;
+  z-index: 0;
+}
+
+#vimeoPlayer {
+  position: absolute;
+  z-index: 1;
+}
+
+#videoContainer .loading {
+  padding-top: 120px;
+  font-size: 18px;
+  font-weight: bold;
+  left: 230px;
+}
+
+#videoContainer .error {
+  font-size: 14px;
+  padding-top: 180px;
+  left: 90px;
+}
+
+#video {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  margin-top: -165px;
+  margin-left: -300px;
+}
+
+#video .caption {
+  margin-top: 10px;
+  position: relative;
+  display: block;
+  text-align: center;
+  font-size: 22px;
+}
+
+#scrollArrow {
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  margin-left: -98px;
+  margin-top: -94px;
+}
+
+/* Overlay */
+#scrollBar {
+  display: none;
+}
+
+
+/* What's on */
+#whatsonContainer {
+  position: absolute;
+  top: 100%;
+  height: 100%;
+  width: 100%;
+  left: 0;
+}
+
+#whatson {
+  margin-top: 40px;
+  line-height: 250%;
+}
+
+
+.section {
+  display: inline-block;
+  width: 100%;
+}
+
+.description  p {
+  line-height: 100%;
+  font-style: italic;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 30px;
+}
+
+.day {
+  float: left;
+  width: 35%;
+  font-size: 45px;
+  text-align: right;
+  vertical-align: top;
+  font-weight: bold;
+}
+
+.day .sup {
+  position: relative;
+  top: -1em;
+  font-size: 50%;
+}
+
+.description {
+  float: right;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 60%;
+  text-align: left;
+  font-size: 35px;
+}
+
+.description em {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 45px;
+}
+
+.link, .link:visited {
+
+  border-bottom: solid 4px;
+  color: #ffffff;
+}
+.link:hover {
+  cursor: pointer;
+}
+
+#footer {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  width: 100%;
+  display: inline-block;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+/* More info div */
+.more-info {
+  display: none;
+  background: #b3dffc;
+  float: left;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.more-info p {
+  color: #3d3d3d;
+  font-size: 35px;
+  line-height: 150%;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+/* Get connected */
+#getConnectedContainer {
+  position: absolute;
+ top: 250%;
+  height: 100%;
+  width: 100%;
+  left: 0;
+}
+
+.hall-group {
+  width: 50%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.hall-group .profile {
+  height: 150px;
+  margin-right: 10px;
+}
+
+.hall-group-profiles p {
+  font-size: 18px;
+  margin-top: 2px;
+}
+.hall-group-info {
+  font-size: 22px;
+}
+
+#buddies {
+  float: left;
+  width: 100%;
+}
+
+#buddyInfo {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 40px;
+  text-align: justify;
+  font-size: 26px;
+}
+
+#buddyForm {
+  margin-left: 33%;
+  display: block;
+  font-size: 26px;
+}
+
+#buddyForm input, select {
+  height: 30px;
+  width: 300px;
+}
+
+#buddyForm button {
+  height: 50px;
+  width: 300px;
+}
+/* Find a church */
+#findAChurchContainer {
+
+
+  position: absolute;
+  top: 500%;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  font-size: 26px;
+}
+
+#churchList {
+  width: 20%;
+  float: left;
+}
+
+#churchList ul {
+  list-style-type: none;
+}
+
+#churchList li {
+  margin-bottom: 30px;
+}
+
+#churchList li:hover {
+  cursor: pointer;
+}
+
+#churchList li.link-active {
+  border-bottom: 1px #ffffff solid;
+}
+
+#churchInfoContainer {
+  width: 70%;
+  float: right;
+  margin-right: 8%;
+}
+
+.church-info {
+  display: none;
+}
+
+.church-info.active {
+  display: block;
+}

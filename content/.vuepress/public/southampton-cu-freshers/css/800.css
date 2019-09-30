@@ -1,0 +1,342 @@
+﻿/* General */
+h1 {
+  margin-top: 20px;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+h2 {
+  text-align: center;
+  font-size: 30px;
+}
+
+body {
+  background-color: #007e94;
+}
+
+.text {
+  color: #FFFFFF;
+  font-family: Helvetica, Arial;
+}
+
+.link {
+  color: #FFFFFF;
+  font-family: Helvetica, Arial;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+
+/* Overlay */
+#scrollBar {
+  position: fixed;
+  right: 10px;
+  top: 15px;
+  z-index: 2;
+}
+
+.scroll-link .link-graphic {
+  position: relative;
+  right: 20px;
+  
+  display: inline-block;
+  width: 17px;
+  height: 130px;
+  background: url('../img/bar.png') bottom;
+  text-indent: -99999px;
+  margin-bottom: 20px;
+}
+
+.scroll-link .link-graphic:hover {
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+.link-text {
+  display: inline-block;
+  position: fixed;
+  right: 0;
+  margin-top: 7px;
+  height: 110px;
+  width: 120px;
+  
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+}
+
+/* Welcome page */
+
+#logo {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-top: -105px;
+  margin-left: -250px;
+}
+
+#videoContainer {
+  height: 281px;
+  width: 500px;
+}
+
+#videoContainer p {
+  position: absolute;
+  z-index: 0;
+}
+
+#vimeoPlayer {
+  position: absolute;
+  z-index: 1;
+}
+
+#videoContainer .loading {
+  padding-top: 120px;
+  font-size: 18px;
+  font-weight: bold;
+  left: 185px;
+}
+
+#videoContainer .error {
+  font-size: 14px;
+  padding-top: 160px;
+  left: 40px;
+}
+
+#video {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -250px;
+}
+
+#video .caption {
+  margin-top: 10px;
+  position: relative;
+  display: block;
+  text-align: center;
+}
+
+#scrollArrow {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  margin-left: -49px;
+  margin-top: -47px;
+}
+
+/* What's on */
+#whatsonContainer {
+  position: absolute;
+  top: 100%;
+  height: 100%;
+  width: 100%;
+  left: 0;
+}
+
+#whatson {
+  margin-top: 15px;
+  line-height: 200%;
+}
+
+.section {
+  position: relative;
+  z-index: 1;
+  background-color: #007e94;
+}
+
+.description  p {
+  line-height: 100%;
+  font-style: italic;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 16px;
+}
+
+.day {
+  display: inline-block;
+  width: 40%;
+  font-size: 24px;
+  text-align: right;
+  vertical-align: top;
+  font-weight: bold;
+}
+
+.day .sup {
+  position: relative;
+  top: -1em;
+  font-size: 50%;
+}
+
+
+.description {
+  display: inline-block;
+  margin-left: 20px;
+  width: 45%;
+  text-align: left;
+  font-size: 20px;
+}
+
+.description em {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 24px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 1%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  z-index: 0;
+}
+
+#footer a:link, a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* More info div */
+.more-info {
+  position: relative;
+  display: none;
+  background: #b3dffc;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  z-index: 1;
+}
+
+.triangle {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-bottom: 20px solid #b3dffc;
+  border-right: 20px solid transparent;
+  right: 50%;
+  visibility: hidden;
+}
+
+.more-info p {
+  color: #3d3d3d;
+  font-size: 18px;
+  display: inline-block;
+  margin: 18px;
+  width: 95%;
+  visibility: hidden;
+  line-height: 150%;
+}
+
+/* Get connected */
+#getConnectedContainer {
+  position: absolute;
+  top: 200%;
+  height: 100%;
+  width: 100%;
+  left: 0;
+}
+
+.hall-group {
+  width: 50%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.hall-group .profile {
+  height: 150px;
+  margin-right: 10px;
+}
+
+.hall-group-profiles p {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+#buddies {
+  float: left;
+  width: 100%;
+}
+
+#buddyInfo {
+  width: 60%;
+  margin: auto;
+  margin-bottom: 40px;
+  text-align: justify;
+}
+
+#buddyForm {
+  width: 60%;
+  margin-left: 15%;
+}
+
+/* Find a church */
+#findAChurchContainer {
+  position: absolute;
+  top: 500%;
+  height: 100%;
+  width: 100%;
+  left: 0;
+}
+
+
+#churchList {
+  width: 20%;
+  float: left;
+}
+
+#churchList ul {
+  list-style-type: none;
+}
+
+#churchList li {
+  margin-bottom: 20px;
+ 
+}
+
+#churchList li:hover {
+  cursor: pointer;
+}
+
+#churchList li.link-active {
+  border-bottom: 1px #ffffff solid;
+}
+
+#churchInfoContainer {
+  width: 70%;
+  float: right;
+  margin-right: 8%;
+}
+
+.church-info {
+  display: none;
+}
+
+.church-info.active {
+  display: block;
+}
