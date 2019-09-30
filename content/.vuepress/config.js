@@ -4,5 +4,10 @@ module.exports = {
 	head: [
 		['link', { rel: 'icon', href: '/icon.png'}]
 	],
-	dest: 'dist'
+	dest: 'dist',
+	themeConfig: {
+		nav: [
+			{ text: 'Blog', link: '/' }
+		]
+	}
 }
