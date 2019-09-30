@@ -7,7 +7,9 @@ module.exports = {
 	dest: 'dist',
 	themeConfig: {
 		nav: [
-			{ text: 'Blog', link: '/' }
+			{ text: 'Home', link: '/' },
+			{ text: 'Blog', link: '/blog' },
+			{ text: 'Projects', link: '/projects' }
 		]
 	}
 }
