@@ -1,0 +1,24 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev content",
+		"build": "vuepress build content",
+		"deploy": "node deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhulme/blog.git"
+  },
+  "author": "Dave Hulme",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhulme/blog/issues"
+  },
+  "homepage": "https://github.com/dhulme/blog#readme",
+  "devDependencies": {
+    "vuepress": "^1.1.0"
+  }
+}
