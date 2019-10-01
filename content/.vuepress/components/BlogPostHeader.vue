@@ -1,7 +1,7 @@
 <template>
   <div v-if="!page.frontmatter.blog_index">
     <router-link class="title-link" :to="page.path">
-      <h2>{{ page.frontmatter.title }}</h2>
+      <h1>{{ page.frontmatter.title }}</h1>
     </router-link>
     <p>
       <em>{{ date }}</em>
@@ -16,7 +16,8 @@
     props: ["post"],
     computed: {
       date() {
-        return format(new Date(this.page.frontmatter.date), "Mo MMMM y");
+        console.log(new Date(this.page.frontmatter.date));
+        return format(new Date(this.page.frontmatter.date), "do MMMM y");
       },
       page() {
         return this.post || this.$page;

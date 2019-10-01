@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="post in posts" :key="post.key">
+    <div class="post" v-for="post in posts" :key="post.key">
       <BlogPostHeader :post="post" />
       <Content :page-key="post.key" />
     </div>
@@ -55,5 +55,9 @@
     transition: background-color 0.1s ease;
     box-sizing: border-box;
     border-bottom: 1px solid #389d70;
+  }
+
+  .post {
+    margin-bottom: 4rem;
   }
 </style>

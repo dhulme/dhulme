@@ -13,6 +13,5 @@ module.exports = {
 			{ text: 'Projects', link: '/projects/' },
 			{ text: 'CV', link: 'https://dhulme.co.uk/dv' },
     ],
-    search: false
 	}
 }
