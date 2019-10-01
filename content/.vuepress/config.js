@@ -8,9 +8,11 @@ module.exports = {
 	themeConfig: {
 		nav: [
 			{ text: 'Home', link: '/' },
+			{ text: 'About', link: '/about/' },
 			{ text: 'Blog', link: '/blog/' },
 			{ text: 'Projects', link: '/projects/' },
-			{ text: 'CV', link: 'https://dhulme.co.uk/cv/' },
-		]
+			{ text: 'CV', link: 'https://dhulme.co.uk/dv' },
+    ],
+    search: false
 	}
 }

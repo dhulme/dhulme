@@ -1,17 +1,31 @@
 # Multitrack Player
-_TODO_
+_1st October 2019_
+
+Running backing tracks at Church is something I do every week. But I've realised using Ableton is quite complicated for new people to use and often not needed for running a single track. I had the idea of creating a multitrack player to run in the web browser to use in both rehearsals or live, on phone, tablet or laptop. This is the first test release that allows you add multiple tracks and a click. You can find the demo [here](https://dhulme.co.uk/multitrack-player) and the source code on [GitHub](https://github.com/dhulme/multitrack-player). If anyone would find this useful and has any bugs, feedback, feature requests or would like to get involved, please let me know!
+
+![Multitrack Player](./images/multitrack-player.png)
 
 # Keys In-ear Mixes
-_TODO_
+_1st October 2019_
+
+At our annual REAL Women's conference at Kerith Community Church, we had the idea of recording our personal in-ear mixes on stage. If you're interested in what I hear in my ears when playing keys on stage, now you can hear for yourself!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VU5ts6T-548" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2jpIYYHVr2I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # Fortnite Highlights
-_TODO_
+_1st October 2019_
+
+Since around May 2018 I've been really enjoying playing Fortnite with some friends, getting better at the game and being part of that community. Earlier this year I put together a highlights video of the best moments from our games in 'Season 7'. Enjoy the great plays! ;)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BuAmOeaN8Q8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 # Next Level Hexagon 2018
 _15th April 2018_
 
-Back in March I had the privilge to play keys and be part of the team leading worship at the Next Level youth event in the Hexagon, Reading. Amongst other pre-made tracks, I created a track for 'Tremble', which you can hear in the video below
+Back in March I had the privilge to play keys and be part of the team leading worship at the Next Level youth event in the Hexagon, Reading. Amongst other pre-made tracks, I created a track for 'Tremble', which you can hear in the video below.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/j6-0Oh2xXOs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
@@ -19,7 +33,9 @@ Back in March I had the privilge to play keys and be part of the team leading wo
 
 # Keyboard Tutorials
 _2nd January 2018_
+
 With some free time I had over Christmas I've created a couple of tutorials about playing keyboard using Ableton Live. There are also a couple more on my channel, you can find them all in <a href="https://www.youtube.com/playlist?list=PLhYvcekzvgEqyHnvDDR4nNzjLZZubdVaW">this playlist</a>. Hope you find them helpful!
+
 <iframe src="https://www.youtube.com/embed/7nYgXVvY9Po" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 <iframe src="https://www.youtube.com/embed/4niWhk4Xwx0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 
@@ -76,7 +92,7 @@ As a JavaScript developer it made sense to use web technologies to achieve this.
 # Retro Tech
 _March 25th 2017_
 
-Back in 2010 I wrote a post about my old Sharp ZQ-770 handhled organiser. In <a href="http://dhulme.co.uk/zq-770/">that post </a>I added a few links to download some programs written for the device as well as the SDK. Recently I was clearing some stuff out from my parent&#8217;s loft and I found the organiser as well as some other retro tech from the early 2000s.
+Back in 2010 I wrote a post about my old Sharp ZQ-770 handhled organiser. In <a href="#zq-770">that post </a>I added a few links to download some programs written for the device as well as the SDK. Recently I was clearing some stuff out from my parent&#8217;s loft and I found the organiser as well as some other retro tech from the early 2000s.
 
 I&#8217;ve been really enjoying the retro tech videos from <a href="https://www.youtube.com/user/Techmoan">Techmoan </a>this year, so inspired by him I put together a YouTube video showing the organisers I owned and telling a bit of their story.
 
