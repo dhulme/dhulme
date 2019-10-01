@@ -12,10 +12,13 @@ async function execPromise(command, options) {
 }
 
 (async () => {
-	const cwd = './dist';
-	await execPromise('npm run build');
+  const cwd = './dist';
+  console.log('Building...');
+  await execPromise('npm run build');
+  console.log('Preparing deployment...');
 	await execPromise('git init', { cwd });
 	await execPromise('git add -A', { cwd });
-	await execPromise('git commit -m "Deploy"', { cwd });
+  await execPromise('git commit -m "Deploy"', { cwd });
+  console.log('Deploying...');
 	await execPromise('git push -f https://github.com/dhulme/dhulme.github.io.git master', { cwd });
 })();
