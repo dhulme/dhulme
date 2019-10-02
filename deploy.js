@@ -24,4 +24,5 @@ async function execPromise(command, options) {
     'git push -f https://github.com/dhulme/dhulme.github.io.git master',
     { cwd }
   );
+  console.log('Done!');
 })();
