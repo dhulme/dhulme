@@ -9,6 +9,6 @@ Each year Southampton CU runs a week of events in February. To promote the week 
 
 A slight parallax effect and embedded fonts were some of the new techniques I used when producing the site. 
 
-You can view the website and watch the video <a href="http://dhulme.co.uk/southampton-cu-events-week/">here</a>.
+You can view the website and watch the video <a href="https://dhulme.uk/southampton-cu-events-week/">here</a>.
 
 ![Events Week Website](./images/events-week-website.jpg)
