@@ -10,14 +10,14 @@
 </template>
 
 <script>
-  import { format, parse } from "date-fns";
+  import { format, parse } from 'date-fns';
 
   export default {
-    props: ["post"],
+    props: ['post'],
     computed: {
       date() {
         console.log(new Date(this.page.frontmatter.date));
-        return format(new Date(this.page.frontmatter.date), "do MMMM y");
+        return format(new Date(this.page.frontmatter.date), 'do MMMM y');
       },
       page() {
         return this.post || this.$page;

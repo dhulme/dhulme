@@ -12,8 +12,8 @@
   </div>
 </template>
 <script>
-  import BlogPostHeader from "./BlogPostHeader";
-  import Content from "@vuepress/core/lib/client/components/Content";
+  import BlogPostHeader from './BlogPostHeader';
+  import Content from '@vuepress/core/lib/client/components/Content';
 
   export default {
     components: {
@@ -30,7 +30,7 @@
       posts() {
         return this.$site.pages
           .filter(
-            page => page.path.startsWith("/blog/") && !page.frontmatter.blog_index
+            page => page.path.startsWith('/blog/') && !page.frontmatter.blog_index
           )
           .sort(
             (a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date)
