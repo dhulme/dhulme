@@ -5,6 +5,6 @@ title: Stopwatch Web App
 
 <BlogPostHeader />
 
-Whilst preparing for several presentations at the end of my degree, I was frustrated with the lack of a good web-based stopwatch application. I therefore spent some time developing my own in JavaScript! You can find it at <a href="/stopwatch">dhulme.co.uk/stopwatch</a>.
+Whilst preparing for several presentations at the end of my degree, I was frustrated with the lack of a good web-based stopwatch application. I therefore spent some time developing my own in JavaScript! You can find it at <a href="/stopwatch">dhulme.uk/stopwatch</a>.
 
 ![Stopwatch App](./images/stopwatch.png)
