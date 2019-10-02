@@ -1,6 +1,6 @@
 module.exports = {
   title: 'David Hulme',
-  description: '',
+  description: "Find out more about me and see what projects I'm working on.",
   head: [['link', { rel: 'icon', href: '/icon.png' }]],
   dest: 'dist',
   themeConfig: {
