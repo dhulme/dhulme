@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vuepress dev content",
     "build": "vuepress build content",
-    "deploy": "node deploy"
+    "deploy": "node deploy",
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",
