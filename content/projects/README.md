@@ -1,15 +1,7 @@
-# Multitrack Player
+<ProjectTiles>
+<ProjectTile title="Multitrack Player" description="Play multitracks in the browser" link="multitrack-player" />
 
-A multitrack audio file player for the browser.
+<ProjectTile title="Money Manager" description="A desktop application for managing your personal finances" link="money-manager" />
 
-<https://github.com/dhulme/multitrack-player>
-
-![Multitrack player](./multitrack-player.png)
-
-# Money Manager
-
-A Desktop application for managing your personal finances.
-
-<https://github.com/dhulme/money-manager>
-
-![Multitrack player](./money-manager.png)
+<ProjectTile title="Spotify Stats" description="Insights on your Spotify playlists" link="spotify-stats" />
+</ProjectTile
