@@ -5,26 +5,35 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Flex Cats</title>
+	<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+		/>
+		
 	<style>
-		body {
-			font-family: sans-serif;
-			margin: 1rem;
-		}
-
-		.controls {
-			display: flex;
-			margin-bottom: 1rem;
-			justify-content: space-between;
-		}
-
-		.controls label {
-			display: block;
-			margin-bottom: .25rem;
-		}
-
 		.container {
-			height: 90vh;
+			margin: 1rem;
 			border: 1px solid lightgray;
+			width: 100%;
+			flex-grow: 1;
+		}
+
+		.navbar {
+			background: #00b8d1a8;
+		}
+
+		.navbar-item {
+			align-items: flex-start;
+		}
+
+		.field {
+			margin-right: 1rem;
+		}
+
+		.app-container {
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
 		}
 	</style>
 </head>
@@ -46,27 +55,31 @@
 				Select: {
 					props: ['label', 'values', 'value'],
 					template: `
-						<div>
-							<label :for="label">{{ label }}</label>
-							<select :id="label" :value="value" @input="$emit('input', $event.target.value)"><option v-for="value in values">{{ value }}</option></select>
-						</div>`	
+						<div class="field">
+							<label class="label" :for="label">{{ label }}</label>
+							<div class="select">
+								<select :id="label" :value="value" @input="$emit('input', $event.target.value)"><option v-for="value in values">{{ value }}</option></select>
+							</div>
+						</div>`
 				}
 			},
 			template: `
-				<div>
-					<div class="controls">
-						<Select label="flexDirection" :values="['row', 'column']" v-model="flexDirection" />
-						<Select label="alignItems" :values="['flex-start', 'flex-end', 'center']" v-model="alignItems" />
-						<Select label="justifyContent" :values="['flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly']" v-model="justifyContent" />
-						
-						<div>
-							<label>Items</label>
-							<input type="text" v-model="childCount" :style="{ width: '3rem' }" />
+				<div class="app-container">
+					<nav class="navbar">
+						<div class="navbar-item">
+						<Select label="Flex Direction" :values="['row', 'column']" v-model="flexDirection" />
+						<Select label="Align Items" :values="['flex-start', 'flex-end', 'center']" v-model="alignItems" />
+						<Select label="Justify Content" :values="['flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around', 'space-evenly']" v-model="justifyContent" />
 						</div>
-
-						<Select label="alignContent" :values="['flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around']" v-model="alignContent" />
-						<Select label="flexWrap" :values="['nowrap', 'wrap', 'wrap-reverse']" v-model="flexWrap" />
-					</div>
+						<div class="navbar-item">
+							<div class="field">
+								<label class="label">Items</label>
+								<input class="input" type="text" v-model="childCount" :style="{ width: '3rem' }" />
+							</div>
+							<Select label="Align Content" :values="['flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around']" v-model="alignContent" />
+							<Select label="Flex Wrap" :values="['no-wrap', 'wrap', 'wrap-reverse']" v-model="flexWrap" />
+						</div>
+					</nav>
 					<div class="container" :style="{
 						display: 'flex',
 						alignItems,
