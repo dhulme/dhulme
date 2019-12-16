@@ -1,5 +1,5 @@
 ---
-date: 2019-12-10
+date: 2019-12-16
 title: Money Manager Updates
 ---
 
