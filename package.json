@@ -19,6 +19,6 @@
   "homepage": "https://github.com/dhulme/blog#readme",
   "devDependencies": {
     "date-fns": "^2.8.1",
-    "vuepress": "^1.2.0"
+    "vuepress": "^1.5.0"
   }
 }
