@@ -39,6 +39,11 @@ module.exports = {
         indexSuffix: '/',
         notFoundPath: '/404.html',
       },
-    ],
+		],
+		[
+			'sitemap', {
+				hostname: 'https://dhulme.uk'
+			},
+		]
   ],
 };
