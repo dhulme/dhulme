@@ -30,5 +30,15 @@ module.exports = {
       { text: 'Projects', link: '/projects/' },
       { text: 'CV', link: 'https://dhulme.uk/cv/' }
     ]
-  }
+	},
+	plugins: [
+    [
+      'vuepress-plugin-clean-urls',
+      {
+        normalSuffix: '',
+        indexSuffix: '/',
+        notFoundPath: '/404.html',
+      },
+    ],
+  ],
 };
