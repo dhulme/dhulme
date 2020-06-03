@@ -42,7 +42,8 @@ module.exports = {
 		],
 		[
 			'sitemap', {
-				hostname: 'https://dhulme.uk'
+				hostname: 'https://dhulme.uk',
+				outFile: 'other/sitemap.xml'
 			},
 		]
   ],
