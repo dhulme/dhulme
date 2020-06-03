@@ -16,7 +16,6 @@
     props: ['post'],
     computed: {
       date() {
-        console.log(new Date(this.page.frontmatter.date));
         return format(new Date(this.page.frontmatter.date), 'do MMMM y');
       },
       page() {

@@ -10,5 +10,6 @@
 		justify-content: center;
 		flex-flow: wrap;
 		margin: -1rem;
+		margin-top: 1rem;
 	}
 </style>
