@@ -4,7 +4,7 @@
       <h1>{{ page.frontmatter.title }}</h1>
     </router-link>
     <p>
-      <em>{{ date }}</em>
+      <em v-html="date" />
     </p>
   </div>
 </template>
@@ -16,7 +16,7 @@
     props: ['post'],
     computed: {
       date() {
-        return format(new Date(this.page.frontmatter.date), 'do MMMM y');
+        return format(new Date(this.page.frontmatter.date), 'do MMMM y').replace(/([0-9]+)(st|nd|rd|th)/, '$1<sup>$2</sup>');
       },
       page() {
         return this.post || this.$page;
