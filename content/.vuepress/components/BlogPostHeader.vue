@@ -10,27 +10,30 @@
 </template>
 
 <script>
-  import { format, parse } from 'date-fns';
+import { format, parse } from 'date-fns';
 
-  export default {
-    props: ['post'],
-    computed: {
-      date() {
-        return format(new Date(this.page.frontmatter.date), 'do MMMM y').replace(/([0-9]+)(st|nd|rd|th)/, '$1<sup>$2</sup>');
-      },
-      page() {
-        return this.post || this.$page;
-      }
+export default {
+  props: ['post'],
+  computed: {
+    date() {
+      return format(new Date(this.page.frontmatter.date), 'do MMMM y').replace(
+        /([0-9]+)(st|nd|rd|th)/,
+        '$1<sup>$2</sup>'
+      );
+    },
+    page() {
+      return this.post || this.$page;
     }
-  };
+  }
+};
 </script>
 
 <style lang="stylus" scoped>
-  .title-link {
-    color: #2c3e50;
+.title-link {
+  color: #2c3e50;
 
-    h2 {
-      color: #2c3e50;
-    }
+  h2 {
+    color: #2c3e50;
   }
+}
 </style>
