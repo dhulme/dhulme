@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-image: url(./background.jpg);
+      background-position: top center;
+      font-family: 'Lato', sans-serif;
+      color: white;
+      margin: 0;
+    }
+
+    h1, h2 {
+      text-align: center;
+      font-weight: 300;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      letter-spacing: 0.7rem;
+      text-transform: uppercase;
+      filter: blur(0.75px);
+      margin-top: 7rem;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      letter-spacing: .25rem;
+      font-size: 1.4rem;
+      filter: blur(0.5px);
+      margin-bottom: 4rem;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 1.5rem 3rem;
+    }
+
+    .music-stores {
+      margin: 0 2rem;
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .music-stores a {
+      margin: 1rem 1.5rem;
+      transition: transform 300ms;
+    }
+
+    .music-stores a:hover {
+      transform: scale(1.1);
+    }
+
+    .music-stores a img {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    @media (min-width: 400px) {
+      h1 {
+        font-size: 3rem;
+        letter-spacing: 1rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      h1 {
+        font-size: 6rem;
+        letter-spacing: 3rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      p {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Creation</h1>
+  <h2>David Hulme</h2>
+  <div class="music-stores">
+    <a href=""><img src="spotify.svg" /></a>
+    <a href=""><img src="youtube.svg" /></a>
+    <a href=""><img src="googleplay.svg" /></a>
+    <a href=""><img src="amazon.svg" /></a>
+  </div>
+  <p>A 10 track instrumental album inspired by creation</p>
+</body>
+</html>
