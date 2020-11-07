@@ -37,28 +37,41 @@
 
     p {
       text-align: center;
-      font-size: 1.2rem;
-      margin: 1.5rem 3rem;
+      letter-spacing: .05rem;
+      font-size: 1rem;
+      margin: 1.5rem 3.5rem;
+      margin-bottom: 0rem;
+      font-weight: 300;
+      filter: blur(0.25px);
     }
 
-    .music-stores {
+    h3 {
+      text-align: center;
+      letter-spacing: .1rem;
+      font-size: 1.2rem;
+      margin: 1.5rem 3rem;
+      margin-bottom: 0rem;
+      font-weight: 400;
+      filter: blur(0.5px);
+    }
+
+    .links {
       margin: 0 2rem;
-      margin-top: 4rem;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
     }
 
-    .music-stores a {
+    .links a {
       margin: 1rem 1.5rem;
       transition: transform 300ms;
     }
 
-    .music-stores a:hover {
+    .links a:hover {
       transform: scale(1.1);
     }
 
-    .music-stores a img {
+    .links a img {
       width: 4rem;
       height: 4rem;
     }
@@ -76,23 +89,20 @@
         letter-spacing: 3rem;
       }
     }
-
-    @media (min-width: 1024px) {
-      p {
-        font-size: 1.4rem;
-      }
-    }
   </style>
 </head>
 <body>
   <h1>Creation</h1>
   <h2>David Hulme</h2>
-  <div class="music-stores">
+  <p>A 10 track instrumental album inspired by creation</p>
+  <h3>Listen</h3>
+  <div class="links">
     <a href=""><img src="spotify.svg" /></a>
     <a href=""><img src="youtube.svg" /></a>
-    <a href=""><img src="googleplay.svg" /></a>
-    <a href=""><img src="amazon.svg" /></a>
   </div>
-  <p>A 10 track instrumental album inspired by creation</p>
+  <h3>Behind the scenes</h3>
+  <div class="links">
+    <a href=""><img src="youtube.svg" /></a>
+  </div>
 </body>
 </html>
