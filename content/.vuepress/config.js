@@ -1,4 +1,4 @@
-const staticFolders = ['multitrack-player', 'cv', 'spotify-stats'];
+const staticFolders = ['multitrack-player', 'cv', 'spotify-stats', 'creation'];
 
 module.exports = {
   title: 'David Hulme',
