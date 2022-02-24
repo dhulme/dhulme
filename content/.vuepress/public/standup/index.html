@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 100;
+      }
+      button, input {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+      }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        font-size: 4rem;
+      }
+      ul li {
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul id="list">
+        
+      </ul>
+      <input type="text" id="ignore" placeholder="Ignore these people" />
+      <button id="refresh">Refresh</button>
+    </main>
+    <script>
+      function update() {
+        const names = ['DHU', 'AKJ', 'CBF', 'SEG', 'SPS', 'MSA', 'NCM'];
+        const ignoreValue = document.getElementById('ignore').value;
+        const ignore = ignoreValue.toUpperCase().split(',');
+        const people = _.difference(names, ignore);
+        const order = _.shuffle(people);
+        const list = document.getElementById('list');
+        list.innerHTML = '';
+        order.forEach(name => {
+          const li = document.createElement('li');
+          li.innerText = name;
+          list.appendChild(li);
+        });
+        localStorage.setItem('ignore', ignoreValue)
+      }
+
+      document.getElementById('ignore').value = localStorage.getItem('ignore') || '';
+      document.getElementById('ignore').addEventListener('input', update);
+      document.getElementById('refresh').addEventListener('click', update);
+      update();
+    </script>
+  </body>
+</html>
+
+
