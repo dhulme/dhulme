@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap"
+    rel="stylesheet"
+    />
+    <script src="https://unpkg.com/alpinejs" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-      body {
+      html, body {
         font-family: 'Roboto', sans-serif;
         font-weight: 100;
+        margin: 0;
+        padding: 0;
       }
-      button, input {
+      main {
+        height: 100vh;
+        padding: 1rem;
+      }
+      main.dark {
+        background: black;
+        color: white;
+      }
+      button,
+      input {
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
+        margin-bottom: 1rem;
+      }
+      button {
+        padding: 0.5rem;
       }
       ul {
         list-style-type: none;
@@ -28,36 +48,54 @@
     </style>
   </head>
   <body>
-    <main>
-      <ul id="list">
-        
+    <main x-data="main":class="darkTheme && 'dark'" x-init="init">
+      <ul>
+        <template x-for="name in shuffledNames">
+          <li x-text="name"></li>
+        </template>
       </ul>
-      <input type="text" id="ignore" placeholder="Ignore these people" />
-      <button id="refresh">Refresh</button>
+      <form @submit="inputSubmit">
+      <input
+        type="text"
+        x-model="ignoredNamesString"
+        placeholder="Ignore these people"
+        x-effect="ignore" 
+      />
+      </form>
+      <button class="button" @click="shuffle">Refresh</button>
+      <button @click="toggleTheme">Toggle theme</button>
     </main>
     <script>
-      function update() {
-        const names = ['DHU', 'AKJ', 'CBF', 'SEG', 'SPS', 'MSA', 'NCM'];
-        const ignoreValue = document.getElementById('ignore').value;
-        const ignore = ignoreValue.toUpperCase().split(',');
-        const people = _.difference(names, ignore);
-        const order = _.shuffle(people);
-        const list = document.getElementById('list');
-        list.innerHTML = '';
-        order.forEach(name => {
-          const li = document.createElement('li');
-          li.innerText = name;
-          list.appendChild(li);
-        });
-        localStorage.setItem('ignore', ignoreValue)
-      }
-
-      document.getElementById('ignore').value = localStorage.getItem('ignore') || '';
-      document.getElementById('ignore').addEventListener('input', update);
-      document.getElementById('refresh').addEventListener('click', update);
-      update();
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('main', () => ({
+          names: ['DHU', 'AKJ', 'CBF', 'SEG', 'SPS', 'MSA', 'NCM'],
+          ignoredNamesString: localStorage.getItem('ignore') || '',
+          filteredNames: [],
+          shuffledNames: [],
+          darkTheme: localStorage.getItem('darkTheme') === 'true',
+          inputSubmit(event) {
+            event.preventDefault();
+            this.ignore();
+            this.shuffle();
+          },
+          ignore() {
+            const ignoredNames = this.ignoredNamesString.toUpperCase().split(',').map(name => name.trim());
+            this.filteredNames = _.difference(this.names, ignoredNames);
+            localStorage.setItem('ignore', this.ignoredNamesString);
+          },
+          shuffle() {
+            this.shuffledNames = _.shuffle(this.filteredNames);
+          },
+          toggleTheme() {
+            this.darkTheme = !this.darkTheme;
+            localStorage.setItem('darkTheme', this.darkTheme);
+          },
+          init() {
+            this.ignore();
+            this.shuffle();
+          },
+        }));
+      });
     </script>
   </body>
 </html>
-
-
