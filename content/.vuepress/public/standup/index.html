@@ -21,7 +21,6 @@
       }
       main {
         height: 100vh;
-        padding: 1rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -47,7 +46,7 @@
         background: none;
         border: none;
         border-radius: 50%;
-        margin: 0.5rem;
+        margin: 0.25rem;
         transition: background 0.2s;
       }
       button svg {
@@ -58,18 +57,30 @@
         background: rgba(0, 0, 0, 0.2);
       }
       ul {
+        padding: 0.5rem;
         list-style-type: none;
         margin: 0;
-        padding: 0;
         overflow: hidden;
-        margin-bottom: 1rem;
-        font-size: 4rem;
       }
       ul li {
-        margin-bottom: 0.5rem;
+        display: flex;
+        margin-bottom: 0.3rem;
+        align-items: center;
       }
       .controls {
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .settings {
+        border-top: 2px solid;
+        padding: 1rem;
+      }
+      .photo {
+        width: 7rem;
+        border-radius: 50%;
+      }
+      .name {
+        font-size: 2rem;
+        margin-left: 1rem;
       }
     </style>
   </head>
@@ -77,11 +88,14 @@
     <main x-data="main" :class="darkTheme && 'dark'" x-init="init">
       <ul>
         <template x-for="name in shuffledNames">
-          <li x-text="name"></li>
+          <li>
+            <img :src="`./avatars/${name.toLowerCase()}.png`" :alt="name" class="photo" />
+            <div class="name" x-text="name" x-show="namesVisible"></div>
+          </li>
         </template>
       </ul>
       <div class="controls">
-        <div x-show="settingsVisible">
+        <div x-show="settingsVisible" class="settings">
           <button @click="toggleTheme" aria-label="Toggle theme">
             <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
               <path
@@ -90,15 +104,24 @@
               />
             </svg>
           </button>
+          <button @click="toggleNames">
+            <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M9.62,12L12,5.67L14.37,12M11,3L5.5,17H7.75L8.87,14H15.12L16.25,17H18.5L13,3H11Z"
+              />
+            </svg>
+          </button>
           <form @submit="inputSubmit">
             <input
               type="text"
               x-model="ignoredNamesString"
-              placeholder="Ignore these people"
+              placeholder="Ignore names"
               x-effect="ignore"
             />
           </form>
         </div>
+
         <button @click="shuffle" aria-label="Refresh">
           <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
             <path
@@ -129,6 +152,7 @@
           shuffledNames: [],
           darkTheme: localStorage.getItem('darkTheme') === 'true',
           settingsVisible: false,
+          namesVisible: localStorage.getItem('namesVisible') !== 'false',
           inputSubmit(event) {
             event.preventDefault();
             this.ignore();
@@ -148,6 +172,10 @@
           toggleTheme() {
             this.darkTheme = !this.darkTheme;
             localStorage.setItem('darkTheme', this.darkTheme);
+          },
+          toggleNames() {
+            this.namesVisible = !this.namesVisible;
+            localStorage.setItem('namesVisible', this.namesVisible);
           },
           init() {
             this.ignore();
