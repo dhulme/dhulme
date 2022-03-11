@@ -10,6 +10,7 @@
     />
     <script src="https://unpkg.com/alpinejs" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <link rel="icon" href="./human-handsup.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       html,
@@ -35,6 +36,10 @@
       main.dark button:hover {
         background: rgba(255, 255, 255, 0.2);
       }
+      main.dark button:focus {
+        outline-color: #fff;
+        outline-width: 3px;
+      }
       button,
       input {
         font-family: 'Roboto', sans-serif;
@@ -49,6 +54,9 @@
         margin: 0.25rem;
         transition: background 0.2s;
       }
+      button:focus {
+        outline: 2px solid #888;
+      }
       button svg {
         position: relative;
         z-index: 1;
@@ -60,7 +68,7 @@
         padding: 0.5rem;
         list-style-type: none;
         margin: 0;
-        overflow: hidden;
+        overflow: auto;
       }
       ul li {
         display: flex;
@@ -82,6 +90,11 @@
         font-size: 2rem;
         margin-left: 1rem;
       }
+      .photo-button {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
     </style>
   </head>
   <body>
@@ -89,7 +102,9 @@
       <ul>
         <template x-for="name in shuffledNames">
           <li>
+            <button class="photo-button">
             <img :src="`./avatars/${name.toLowerCase()}.png`" :alt="name" class="photo" />
+            </button>
             <div class="name" x-text="name" x-show="namesVisible"></div>
           </li>
         </template>
