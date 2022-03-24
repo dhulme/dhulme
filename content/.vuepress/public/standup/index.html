@@ -36,10 +36,6 @@
       main.dark button:hover {
         background: rgba(255, 255, 255, 0.2);
       }
-      main.dark button:focus {
-        outline-color: #fff;
-        outline-width: 3px;
-      }
       button,
       input {
         font-family: 'Roboto', sans-serif;
@@ -55,7 +51,7 @@
         transition: background 0.2s;
       }
       button:focus {
-        outline: 2px solid #888;
+        outline: 3px solid #9399f5;
       }
       button svg {
         position: relative;
@@ -93,6 +89,10 @@
       .photo-button {
         margin: 0;
         padding: 0;
+        background: #fff;
+      }
+      main.dark .photo-button:hover, .photo-button:hover, .photo-button:focus {
+        outline: 4px solid #9399f5;
         background: #fff;
       }
     </style>
