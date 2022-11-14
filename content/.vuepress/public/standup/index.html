@@ -21,6 +21,7 @@
         padding: 0;
       }
       main {
+        min-height: 100vh;
       }
       main.dark {
         background: black;
@@ -66,6 +67,7 @@
       ul li {
         display: flex;
         align-items: center;
+        margin-bottom: 0.25rem;
       }
       .controls {
         position: fixed;
@@ -177,7 +179,7 @@
       document.addEventListener('alpine:init', () => {
         Alpine.data('main', () => ({
           names: ['DHU', 'AKJ', 'CBF', 'SEG', 'SPS', 'MSA', 'NCM', 'ARW', 'JAD', 'SBU'],
-          graveyardNames: ['AKJ'],
+          graveyardNames: ['AKJ', 'SPS', 'MSA'],
           ignoredNamesString: localStorage.getItem('ignore') || '',
           filteredNames: [],
           shuffledNames: [],
