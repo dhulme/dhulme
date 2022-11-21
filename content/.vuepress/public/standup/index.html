@@ -10,6 +10,9 @@
     />
     <script src="https://unpkg.com/alpinejs" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script>const teams = [];</script>
+    <script src="./teams/wfm.js"></script>
+    <script src="./teams/view.js"></script>
     <link rel="icon" href="./human-handsup.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
@@ -72,13 +75,18 @@
       .controls {
         position: fixed;
         bottom: 0;
+        z-index: 1;
       }
       .settings {
-        border-top: 2px solid;
+        background: white;
         padding: 1rem;
       }
-      .photo {
+      main.dark .settings {
+        background: black;
+      }
+      .photo, .photo svg {
         width: 6rem;
+        height: 6rem;
         border-radius: 50%;
       }
       .name {
@@ -104,17 +112,20 @@
   <body>
     <main x-data="main" :class="darkTheme && 'dark'" x-init="init">
       <ul>
-        <template x-for="name in displayedNames">
-          <li :class="graveyardNames.includes(name) && 'graveyard'">
+        <template x-for="member in displayedMembers">
+          <li :class="member.graveyard && 'graveyard'">
             <button class="photo-button">
+              <template x-if="member.svg"><div x-html="member.svg" class="photo"></div></template>
+              <template x-if="!member.svg">
               <img
-                :src="`./avatars/${name.toLowerCase()}.svg`"
-                :alt="name"
+                :src="`./avatars/${member.tla.toLowerCase()}.svg`"
+                :alt="member.tla"
                 class="photo"
                 @error="loadAlternateImage"
               />
+              </template>
             </button>
-            <div class="name" x-text="name" x-show="namesVisible"></div>
+            <div class="name" x-text="member.tla" x-show="namesVisible"></div>
           </li>
         </template>
       </ul>
@@ -152,6 +163,13 @@
               x-effect="ignore"
             />
           </form>
+          <form>
+            <select x-model="selectedTeam" x-effect="updateTeam">
+              <template x-for="team in teams">
+                <option x-text="team.name" :selected="selectedTeam === team.name"></option>
+              </template>
+            </select>
+          </form>
         </div>
 
         <button @click="shuffle" aria-label="Refresh">
@@ -178,11 +196,10 @@
     <script>
       document.addEventListener('alpine:init', () => {
         Alpine.data('main', () => ({
-          names: ['DHU', 'AKJ', 'CBF', 'SEG', 'SPS', 'MSA', 'NCM', 'ARW', 'JAD', 'SBU'],
-          graveyardNames: ['AKJ', 'SPS', 'MSA'],
+          selectedTeam: localStorage.getItem('team') || 'WFM',
+          teams,
           ignoredNamesString: localStorage.getItem('ignore') || '',
-          filteredNames: [],
-          shuffledNames: [],
+          shuffledMembers: [],
           darkTheme: localStorage.getItem('darkTheme') === 'true',
           settingsVisible: false,
           namesVisible: localStorage.getItem('namesVisible') !== 'false',
@@ -190,27 +207,36 @@
             localStorage.getItem('graveyardVisible') === 'true',
           inputSubmit(event) {
             event.preventDefault();
-            this.ignore();
             this.shuffle();
           },
           ignore() {
+            localStorage.setItem('ignore', this.ignoredNamesString);
+          },
+          shuffle() {
+            this.shuffledMembers = _.shuffle(this.filteredMembers);
+          },
+          get filteredMembers() {
             const ignoredNames = this.ignoredNamesString
               .toUpperCase()
               .split(',')
               .map((name) => name.trim());
-            this.filteredNames = _.difference(this.names, ignoredNames).filter(
-              (name) => !this.graveyardNames.includes(name)
-            );
-            localStorage.setItem('ignore', this.ignoredNamesString);
+            return this.team.members.filter(member => !ignoredNames.includes(member.tla) && !member.graveyard);
           },
-          shuffle() {
-            this.shuffledNames = _.shuffle(this.filteredNames);
+          get graveyardMembers() {
+            return this.team.members.filter(member => member.graveyard)
           },
-          get displayedNames() {
+          get displayedMembers() {
             return [
-              ...this.shuffledNames,
-              ...(this.graveyardVisible ? this.graveyardNames : []),
+              ...this.shuffledMembers,
+              ...(this.graveyardVisible ? this.graveyardMembers : []),
             ];
+          },
+          get team() {
+            return teams.find(team => team.name === this.selectedTeam);
+          },
+          updateTeam() {
+            localStorage.setItem('team', this.team.name);
+            this.shuffle();
           },
           toggleTheme() {
             this.darkTheme = !this.darkTheme;
@@ -225,12 +251,11 @@
             localStorage.setItem('graveyardVisible', this.graveyardVisible);
           },
           init() {
-            this.ignore();
             this.shuffle();
           },
           loadAlternateImage(element) {
             element.target.src = element.target.src.replace('svg', 'png');
-          }
+          },
         }));
       });
     </script>
