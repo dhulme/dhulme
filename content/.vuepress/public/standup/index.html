@@ -72,16 +72,19 @@
         align-items: center;
         margin-bottom: 0.25rem;
       }
+	  ul li:last-child {
+		margin-bottom: 4rem;
+	  }
       .controls {
         position: fixed;
         bottom: 0;
         z-index: 1;
+		background: white;
       }
       .settings {
-        background: white;
         padding: 1rem;
       }
-      main.dark .settings {
+      main.dark .controls {
         background: black;
       }
       .photo, .photo svg {
