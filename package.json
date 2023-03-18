@@ -2,10 +2,10 @@
   "name": "dhulme",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vuepress dev content",
-    "build": "vuepress build content",
     "deploy": "node deploy",
-    "start": "npm run dev"
+    "start": "vitepress dev content",
+    "build": "vitepress build content",
+    "preview": "vitepress preview content"
   },
   "repository": {
     "type": "git",
@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/dhulme/blog#readme",
   "devDependencies": {
-    "date-fns": "^2.16.1",
-    "vuepress": "^1.9.7",
-    "vuepress-plugin-clean-urls": "^1.1.2",
-    "vuepress-plugin-sitemap": "^2.3.1"
-  },
-  "dependencies": {}
+    "@types/node": "^18.15.3",
+    "date-fns": "^2.29.3",
+    "gray-matter": "^4.0.3",
+    "vitepress": "^1.0.0-alpha.60",
+    "vue": "^3.2.47"
+  }
 }
