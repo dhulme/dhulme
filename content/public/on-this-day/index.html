@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>On This Day</title>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        font-family: 'Open Sans', sans-serif;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.25rem;
+      }
+
+      body {
+        max-width: 50rem;
+        margin: auto;
+      }
+
+      .year {
+        text-align: center;
+        margin-bottom: 1rem;
+        border: 1px solid #00000024;
+        border-style: dashed;
+        padding: 1rem;
+      }
+
+      .year-title {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .event-title {
+        margin-bottom: 0.5rem;
+      }
+
+      .main-text {
+        font-size: 1.5rem;
+      }
+
+      button {
+        background: #0000000a;
+        font-family: inherit;
+        font-size: 1.25rem;
+        border: 1px solid;
+      }
+
+      button:hover {
+        background: #0000003b;
+      }
+
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>On This Day</h1>
+
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize_button" onclick="handleAuthClick()">Login</button>
+    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+
+    <script type="text/javascript">
+      /* exported gapiLoaded */
+      /* exported gisLoaded */
+      /* exported handleAuthClick */
+      /* exported handleSignoutClick */
+
+      const CLIENT_ID =
+        '591712076014-ev9at5po7ett8limf2q1lv43o119m1a8.apps.googleusercontent.com';
+      const API_KEY = 'AIzaSyDrb8rUdlLROjM_dQBFmdc_i49TUelfE-g';
+
+      // Discovery doc URL for APIs used by the quickstart
+      const DISCOVERY_DOC =
+        'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+
+      let tokenClient;
+      let gapiInited = false;
+      let gisInited = false;
+
+      document.getElementById('authorize_button').style.display = 'none';
+      document.getElementById('signout_button').style.display = 'none';
+
+      /**
+       * Callback after api.js is loaded.
+       */
+      function gapiLoaded() {
+        gapi.load('client', initializeGapiClient);
+      }
+
+      /**
+       * Callback after the API client is loaded. Loads the
+       * discovery doc to initialize the API.
+       */
+      async function initializeGapiClient() {
+        await gapi.client.init({
+          apiKey: API_KEY,
+          discoveryDocs: [DISCOVERY_DOC],
+        });
+        gapiInited = true;
+        maybeEnableButtons();
+      }
+
+      /**
+       * Callback after Google Identity Services are loaded.
+       */
+      function gisLoaded() {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: SCOPES,
+          callback: '', // defined later
+          access_type: 'offline'
+        });
+        gisInited = true;
+        maybeEnableButtons();
+      }
+
+      /**
+       * Enables user interaction after all libraries are loaded.
+       */
+      function maybeEnableButtons() {
+        if (gapiInited && gisInited) {
+          const tokenRaw = localStorage.getItem('token');
+          const token = tokenRaw ? JSON.parse(tokenRaw) : null;
+          console.log(`token`, token);
+          if (token) {
+            gapi.client.setToken(token);
+            displayEvents();
+          } else {
+            document.getElementById('authorize_button').style.display = 'block';
+          }
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick() {
+        tokenClient.callback = async (resp) => {
+          if (resp.error !== undefined) {
+            throw resp;
+          }
+          document.getElementById('signout_button').style.display = 'none';
+          document.getElementById('authorize_button').innerText = 'Refresh';
+          localStorage.setItem('token', JSON.stringify(gapi.client.getToken()));
+          await displayEvents();
+        };
+
+        if (gapi.client.getToken() === null) {
+          // Prompt the user to select a Google Account and ask for consent to share their data
+          // when establishing a new session.
+          tokenClient.requestAccessToken({ prompt: 'consent' });
+        } else {
+          // Skip display of account chooser and consent dialog for an existing session.
+          tokenClient.requestAccessToken({ prompt: '' });
+        }
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick() {
+        const token = gapi.client.getToken();
+        if (token !== null) {
+          google.accounts.oauth2.revoke(token.access_token);
+          gapi.client.setToken('');
+          document.getElementById('content').innerText = '';
+          document.getElementById('authorize_button').innerText = 'Authorize';
+          document.getElementById('signout_button').style.visibility = 'hidden';
+        }
+      }
+
+      /**
+       * Print the summary and start datetime/date of the next ten events in
+       * the authorized user's calendar. If no events are found an
+       * appropriate message is printed.
+       */
+      async function displayEvents() {
+        let response;
+        const today = new Date();
+        today.setMilliseconds(0);
+        today.setSeconds(0);
+        today.setMinutes(0);
+        today.setHours(0);
+        const data = [];
+        for (let yearOffset = 0; yearOffset < 25; yearOffset++) {
+          const start = new Date(today);
+          start.setFullYear(today.getFullYear() - yearOffset);
+          const end = new Date(start);
+          end.setDate(start.getDate() + 1);
+          data.push({
+            year: start.getFullYear(),
+            request: {
+              calendarId:
+                'n7lmgc9apucj9pd8ltronvg8g4@group.calendar.google.com',
+              timeMin: start.toISOString(),
+              timeMax: end.toISOString(),
+              maxResults: 1,
+            },
+          });
+          data.push({
+            year: start.getFullYear(),
+            request: {
+              calendarId: 'primary',
+              timeMin: start.toISOString(),
+              timeMax: end.toISOString(),
+              maxResults: 1,
+            },
+          });
+        }
+
+        document.getElementById('loading').style.display = 'block';
+        try {
+          const promises = await Promise.all(data.map((item) => {
+            return gapi.client.calendar.events.list(item.request);
+          }));
+          for (let i = 0; i < promises.length; i++) {
+            data[i].response = promises[i];
+          }
+        } catch (err) {
+          localStorage.clear();
+          return;
+        }
+        
+        document.getElementById('loading').style.display = 'none';
+
+        for (const item of data) {
+          if (item.response.result.items.length === 0) {
+            continue;
+          }
+
+          const year = document.createElement('div');
+          year.classList.add('year');
+
+          const yearTitle = document.createElement('h2');
+          yearTitle.innerText = item.year;
+          yearTitle.classList.add('year-title');
+          year.appendChild(yearTitle);
+
+          const event = document.createElement('div');
+          event.classList.add('event');
+          const eventTitle = document.createElement('div');
+          eventTitle.classList.add('event-title');
+          eventTitle.innerText = item.response.result.items[0].summary;
+          event.appendChild(eventTitle);
+          const descriptionText = item.response.result.items[0].description;
+          if (descriptionText) {
+            const description = document.createElement('div');
+            description.classList.add('event-description');
+            description.classList.add('main-text');
+            description.innerText = descriptionText;
+            event.appendChild(description);
+          } else {
+            eventTitle.classList.add('main-text');
+          }
+          year.appendChild(event);
+
+          document.getElementById('events').appendChild(year);
+        }
+      }
+    </script>
+    <script
+      async
+      defer
+      src="https://apis.google.com/js/api.js"
+      onload="gapiLoaded()"
+    ></script>
+    <script
+      async
+      defer
+      src="https://accounts.google.com/gsi/client"
+      onload="gisLoaded()"
+    ></script>
+    <div id="loading" style="display: none">Loading...</div>
+    <div id="events"></div>
+  </body>
+</html>

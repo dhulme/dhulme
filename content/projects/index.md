@@ -13,13 +13,13 @@ const projects = [
   {
     avatar: '/images/spotify-playlists-logo.svg',
     name: 'Spotify Playlists',
-    title: 'Manage your Spotify playlists',
+    title: 'Spotify playlist manager for power users',
     link: 'spotify-playlists',
   },
     {
       avatar: '/images/money-manager-logo.png',
       name: 'Money Manager',
-      title: 'A desktop application for managing your personal finances',
+      title: 'Desktop application for managing your personal finances',
       link: 'money-manager',
     },
     {
