@@ -10,7 +10,9 @@
     />
     <script src="https://unpkg.com/alpinejs" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-    <script>const teams = [];</script>
+    <script>
+      const teams = [];
+    </script>
     <script src="./teams/wfm.js"></script>
     <script src="./teams/view.js"></script>
     <link rel="icon" href="./human-handsup.svg" />
@@ -72,14 +74,21 @@
         align-items: center;
         margin-bottom: 0.25rem;
       }
-	  ul li:last-child {
-		margin-bottom: 4rem;
-	  }
+      ul li:last-child {
+        margin-bottom: 4rem;
+      }
       .controls {
         position: fixed;
         bottom: 0;
         z-index: 1;
-		background: white;
+        background: white;
+      }
+      .bottom-controls {
+        display: flex;
+        align-items: center;
+      }
+      .count {
+        margin-left: 0.5rem;
       }
       .settings {
         padding: 1rem;
@@ -87,7 +96,8 @@
       main.dark .controls {
         background: black;
       }
-      .photo, .photo svg {
+      .photo,
+      .photo svg {
         width: 6rem;
         height: 6rem;
         border-radius: 50%;
@@ -118,14 +128,16 @@
         <template x-for="member in displayedMembers">
           <li :class="member.history && 'history'">
             <button class="photo-button">
-              <template x-if="member.svg"><div x-html="member.svg" class="photo"></div></template>
+              <template x-if="member.svg"
+                ><div x-html="member.svg" class="photo"></div
+              ></template>
               <template x-if="!member.svg">
-              <img
-                :src="`./avatars/${member.tla.toLowerCase()}.svg`"
-                :alt="member.tla"
-                class="photo"
-                @error="loadAlternateImage"
-              />
+                <img
+                  :src="`./avatars/${member.tla.toLowerCase()}.svg`"
+                  :alt="member.tla"
+                  class="photo"
+                  @error="loadAlternateImage"
+                />
               </template>
             </button>
             <div class="name" x-text="member.tla" x-show="namesVisible"></div>
@@ -169,12 +181,16 @@
           <form>
             <select x-model="selectedTeam" x-effect="updateTeam">
               <template x-for="team in teams">
-                <option x-text="team.name" :selected="selectedTeam === team.name"></option>
+                <option
+                  x-text="team.name"
+                  :selected="selectedTeam === team.name"
+                ></option>
               </template>
             </select>
           </form>
         </div>
 
+        <div class="bottom-controls">
         <button @click="shuffle" aria-label="Refresh">
           <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
             <path
@@ -194,6 +210,9 @@
             />
           </svg>
         </button>
+
+        <div class="count"><span x-text="displayedMembers.length"></span> people</div>
+      </div>
       </div>
     </main>
     <script>
@@ -206,8 +225,7 @@
           darkTheme: localStorage.getItem('darkTheme') === 'true',
           settingsVisible: false,
           namesVisible: localStorage.getItem('namesVisible') !== 'false',
-          historyVisible:
-            localStorage.getItem('historyVisible') === 'true',
+          historyVisible: localStorage.getItem('historyVisible') === 'true',
           inputSubmit(event) {
             event.preventDefault();
             this.shuffle();
@@ -223,10 +241,12 @@
               .toUpperCase()
               .split(',')
               .map((name) => name.trim());
-            return this.team.members.filter(member => !ignoredNames.includes(member.tla) && !member.history);
+            return this.team.members.filter(
+              (member) => !ignoredNames.includes(member.tla) && !member.history
+            );
           },
           get historyMembers() {
-            return this.team.members.filter(member => member.history)
+            return this.team.members.filter((member) => member.history);
           },
           get displayedMembers() {
             return [
@@ -235,7 +255,7 @@
             ];
           },
           get team() {
-            return teams.find(team => team.name === this.selectedTeam);
+            return teams.find((team) => team.name === this.selectedTeam);
           },
           updateTeam() {
             localStorage.setItem('team', this.team.name);
