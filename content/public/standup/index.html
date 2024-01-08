@@ -234,7 +234,13 @@
             localStorage.setItem('ignore', this.ignoredNamesString);
           },
           shuffle() {
-            this.shuffledMembers = _.shuffle(this.filteredMembers);
+            const atBottomMembers = this.filteredMembers.filter(
+              (member) => member.atBottom
+            );
+            const notAtBottomMembers = this.filteredMembers.filter(
+              (member) => !member.atBottom
+            );
+            this.shuffledMembers = [..._.shuffle(notAtBottomMembers), ...atBottomMembers];
           },
           get filteredMembers() {
             const ignoredNames = this.ignoredNamesString
