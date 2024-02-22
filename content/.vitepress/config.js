@@ -37,7 +37,7 @@ export default defineConfig({
       // { text: 'CV', link: 'https://dhulme.uk/cv/' }
     ],
     socialLinks: [
-      { icon: 'twitter', link: 'https://twitter.com/dhulme' },
+      { icon: 'twitter', link: 'https://twitter.com/hulmed' },
       { icon: 'github', link: 'https://github.com/dhulme' },
       { icon: 'linkedin', link: 'https://www.linkedin.com/in/dhulme/' },
       { icon: 'youtube', link: 'https://www.youtube.com/user/dhulme2' },
