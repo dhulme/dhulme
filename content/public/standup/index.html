@@ -258,15 +258,14 @@
             localStorage.setItem('ignore', this.ignoredNamesString);
           },
           shuffle() {
-            const atBottomMembers = this.filteredMembers.filter(
-              (member) => member.atBottom
-            );
-            const notAtBottomMembers = this.filteredMembers.filter(
-              (member) => !member.atBottom
-            );
             this.shuffledMembers = [
-              ..._.shuffle(notAtBottomMembers),
-              ...atBottomMembers,
+              ...this.filteredMembers.filter((member) => member.atTop),
+              ..._.shuffle(
+                this.filteredMembers.filter(
+                  (member) => !member.atBottom && !member.atTop
+                )
+              ),
+              ...this.filteredMembers.filter((member) => member.atBottom),
             ];
             this.copTla =
               this.shuffledMembers[
