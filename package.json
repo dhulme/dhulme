@@ -18,10 +18,11 @@
   },
   "homepage": "https://github.com/dhulme/blog#readme",
   "devDependencies": {
-    "@types/node": "^18.15.3",
-    "date-fns": "^2.29.3",
-    "gray-matter": "^4.0.3",
-    "vitepress": "^1.0.0-alpha.60",
-    "vue": "^3.2.47"
-  }
+    "@types/node": "20.11.30",
+    "date-fns": "3.6.0",
+    "gray-matter": "4.0.3",
+    "vitepress": "1.0.1",
+    "vue": "3.4.21"
+  },
+  "type": "module"
 }
