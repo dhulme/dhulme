@@ -1,4 +1,4 @@
-const exec = require('child_process').exec;
+import { exec } from 'child_process';
 
 async function execPromise(command, options) {
   return new Promise((resolve, reject) => {
