@@ -1,0 +1,76 @@
+html, body {
+  font-family: Arial, sans-serif;
+  background-color: black;
+  color: white;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+select,
+input[type='range'] {
+  display: block;
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  border-radius: 0.25rem;
+}
+label {
+  font-size: 16px;
+  margin-top: 20px;
+}
+audio {
+  display: none;
+}
+input[type='range'] {
+  height: 50vh;
+  width: 4rem;
+  appearance: none;
+  background: none;
+  writing-mode: vertical-lr;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  width: 100%;
+  background: gray;
+  border-radius: 0.25rem;
+}
+input[type='range']::-webkit-slider-thumb {
+  width: 100%;
+  height: 10%;
+  appearance: none;
+  background: white;
+  border-radius: 0.25rem;
+}
+.ranges {
+  display: flex;
+  justify-content: space-around;
+}
+.ranges div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#playButton {
+  width: 100%;
+  height: 3.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background: white;
+  border-radius: 0.25rem;
+  border: none;
+  margin-bottom: 0.75rem;
+}
+main {
+  max-width: 25rem;
+  flex-grow: 1;
+}
+h1 {
+  font-style: italic;
+  font-weight: normal;
+  text-align: center;
+  font-size: 2rem;
+}
