@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioElement = document.getElementById('audio');
   const padTypeSelect = document.getElementById('padTypeSelect');
   const padKeySelect = document.getElementById('padKeySelect');
-  const cutoffControl = document.getElementById('cutoffControl');
+  const hpfControl = document.getElementById('hpfControl');
+  const lpfControl = document.getElementById('lpfControl');
   const volumeControl = document.getElementById('volumeControl');
   const playButton = document.getElementById('playButton');
 
@@ -10,18 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const source = audioContext.createMediaElementSource(audioElement);
 
-  const lowPassFilter = audioContext.createBiquadFilter();
-  lowPassFilter.type = 'lowpass';
-  lowPassFilter.frequency.value = getCutoffFrequency();
+  const lpf = audioContext.createBiquadFilter();
+  lpf.type = 'lowpass';
+  lpf.frequency.value = getLpfFrequency();
 
-  const gainNode = audioContext.createGain();
-  gainNode.gain.value = getGain();
+  const hpf = audioContext.createBiquadFilter();
+  hpf.type = 'highpass';
+  hpf.frequency.value = getHpfFrequency();
 
-  function getCutoffFrequency() {
+  const gain = audioContext.createGain();
+  gain.gain.value = getGain();
+
+  function getHpfFrequency() {
     const minValue = 20;
     const maxValue = 20000;
     return (
-      Math.exp((1 - cutoffControl.value) * Math.log(maxValue / minValue)) *
+      Math.exp((1 - hpfControl.value) * Math.log(maxValue / minValue)) *
+      minValue
+    );
+  }
+
+  function getLpfFrequency() {
+    const minValue = 20;
+    const maxValue = 20000;
+    return (
+      Math.exp((1 - lpfControl.value) * Math.log(maxValue / minValue)) *
       minValue
     );
   }
@@ -30,9 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return 1 - volumeControl.value;
   }
 
-  source.connect(lowPassFilter);
-  lowPassFilter.connect(gainNode);
-  gainNode.connect(audioContext.destination);
+  source.connect(hpf);
+  hpf.connect(lpf);
+  lpf.connect(gain);
+  gain.connect(audioContext.destination);
 
   let playing = false;
   playButton.addEventListener('click', () => {
@@ -54,12 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  cutoffControl.addEventListener('input', () => {
-    lowPassFilter.frequency.value = getCutoffFrequency();
+  hpfControl.addEventListener('input', () => {
+    hpf.frequency.value = getHpfFrequency();
+  });
+
+  lpfControl.addEventListener('input', () => {
+    lpf.frequency.value = getLpfFrequency();
   });
 
   volumeControl.addEventListener('input', () => {
-    gainNode.gain.value = getGain();
+    gain.gain.value = getGain();
   });
 
   audioElement.addEventListener('timeupdate', () => {

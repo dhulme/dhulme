@@ -39,16 +39,26 @@
           />
         </div>
         <div>
-          <label for="cutoffControl">Filter</label>
+          <label for="hpfControl">HPF</label>
           <input
             type="range"
-            id="cutoffControl"
+            id="hpfControl"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+          />
+        </div>
+        <div>
+          <label for="lpfControl">LPF</label>
+          <input
+            type="range"
+            id="lpfControl"
             min="0"
             max="1"
             step="0.01"
             value="0"
           />
-        </div>
       </div>
     </main>
   </body>
