@@ -9,29 +9,48 @@
   <body>
     <main>
       <h1>Pads</h1>
-      <select id="padTypeSelect">
-        <option value="boyle">Basic Boyle</option>
-        <option value="sam">Simple Sam</option>
-        <option value="simon">Simple Simon</option>
-        <option value="emotive">Emotive Past</option>
-      </select>
-      <select id="padKeySelect">
-        <option value="a.ogg">A</option>
-        <option value="b.ogg">B</option>
-        <option value="c.ogg">C</option>
-        <option value="d.ogg">D</option>
-        <option value="e.ogg">E</option>
-        <option value="f.ogg">F</option>
-        <option value="g.ogg">G</option>
+      <div class="flex">
+        <div>
+          <label for="padTypeSelect">Pad Type</label>
+          <select id="padTypeSelect">
+            <option value="boyle">Basic Boyle</option>
+            <option value="sam">Simple Sam</option>
+            <option value="simon">Simple Simon</option>
+            <option value="emotive">Emotive Past</option>
+          </select>
+        </div>
+        <div>
+          <label for="padKeySelect">Pad Key</label>
+          <select id="padKeySelect">
+            <option value="a.ogg">A</option>
+            <option value="b.ogg">B</option>
+            <option value="c.ogg">C</option>
+            <option value="d.ogg">D</option>
+            <option value="e.ogg">E</option>
+            <option value="f.ogg">F</option>
+            <option value="g.ogg">G</option>
+          </select>
+        </div>
+      </div>
+      <label for="bassOctaveSelect">Bass Octave</label>
+      <select id="bassOctaveSelect">
+        <option value="-2">-2</option>
+        <option value="-1">-1</option>
+        <option value="0" selected>0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
       </select>
       <audio id="audio" controls></audio>
-      <button id="playButton">Play / Pause</button>
+      <div class="flex">
+        <button id="playButton">Play / Pause</button>
+        <button id="bassButton">Bass</button>
+      </div>
       <div class="ranges">
         <div>
-          <label for="volumeControl">Volume</label>
+          <label for="padVolumeControl">Pad</label>
           <input
             type="range"
-            id="volumeControl"
+            id="padVolumeControl"
             min="0"
             max="1"
             step="0.01"
@@ -39,10 +58,10 @@
           />
         </div>
         <div>
-          <label for="hpfControl">HPF</label>
+          <label for="padHpfControl">Pad HPF</label>
           <input
             type="range"
-            id="hpfControl"
+            id="padHpfControl"
             min="0"
             max="1"
             step="0.01"
@@ -50,15 +69,27 @@
           />
         </div>
         <div>
-          <label for="lpfControl">LPF</label>
+          <label for="padLpfControl">Pad LPF</label>
           <input
             type="range"
-            id="lpfControl"
+            id="padLpfControl"
             min="0"
             max="1"
             step="0.01"
             value="0"
           />
+        </div>
+        <div>
+          <label for="bassLpfControl">Bass LPF</label>
+          <input
+            type="range"
+            id="bassLpfControl"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.72"
+          />
+        </div>
       </div>
     </main>
   </body>
