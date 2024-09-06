@@ -16,6 +16,8 @@ function getLpfFrequency(value) {
   );
 }
 
+navigator.wakeLock.request('screen');
+
 document.addEventListener('DOMContentLoaded', () => {
   const audioElement = document.getElementById('audio');
   const padTypeSelect = document.getElementById('padTypeSelect');
