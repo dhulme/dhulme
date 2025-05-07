@@ -153,7 +153,7 @@
             </button>
             <div class="name" x-text="member.tla" x-show="namesVisible"></div>
             <svg
-              x-show="member.tla === copTla"
+              x-show="copVisible && member.tla === copTla"
               class="cop"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -250,6 +250,7 @@
           namesVisible: localStorage.getItem('namesVisible') !== 'false',
           historyVisible: localStorage.getItem('historyVisible') === 'true',
           copTla: '',
+          copVisible: false,
           inputSubmit(event) {
             event.preventDefault();
             this.shuffle();
