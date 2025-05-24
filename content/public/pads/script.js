@@ -1,3 +1,7 @@
+const noteOff = 128; // Channel 1
+const noteOn = 144; // Channel 1
+const sustain = 176; // Channel 1
+
 function getHpfFrequency(value) {
   const minValue = 20;
   const maxValue = 20000;
@@ -16,6 +20,12 @@ function getLpfFrequency(value) {
   );
 }
 
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    navigator.wakeLock.request('screen');
+  }
+});    
+
 navigator.wakeLock.request('screen');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -29,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const padVolumeControl = document.getElementById('padVolumeControl');
   const playButton = document.getElementById('playButton');
   const bassButton = document.getElementById('bassButton');
+  const loadingIndicator = document.getElementById('loadingIndicator');
 
   const audioContext = new AudioContext();
 
@@ -85,27 +96,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  let loadingTimeout = null;
+  audioElement.addEventListener('loadstart', () => {
+    clearTimeout(loadingTimeout);
+    loadingTimeout = setTimeout(() => {
+      if (audioElement.readyState < 2) {
+        loadingIndicator.style.display = 'block';
+      }
+    }, 300);
+  });
+  audioElement.addEventListener('canplay', () => {
+    loadingIndicator.style.display = 'none';
+  });
+
   let bassEnabled = false;
+  let sustained = false;
   bassButton.addEventListener('click', async () => {
     bassEnabled = !bassEnabled;
     resumeAudioContext();
 
-    if (bassEnabled) {
-      bassButton.classList.add('selected');
-    } else {
-      bassButton.classList.remove('selected');
-    }
+    bassButton.classList[bassEnabled ? 'add' : 'remove']('selected');
 
     const midi = await navigator.requestMIDIAccess();
     midi.inputs.forEach((input) => {
       input.onmidimessage = (message) => {
-        const [command, note, velocity] = message.data;
-        if (!note) return;
-        if (command === 144 && velocity > 0) {
-          playNote(note);
-        } else if (command === 128 || (command === 144 && velocity === 0)) {
-          stopNote(note);
+        const [command, note, value] = message.data;
+        // console.log(notes);
+        // if (!note) return;
+        if (command === sustain) {
+          sustained = value > 0;
+          console.log('notes', notes);
+          console.log(`sustainedNotes`, sustainedNotes);
+          if (!sustained) {
+            sustainedNotes.length = 0;
+            stopNote();
+          }
         }
+        if (command === noteOn && value > 0) {
+            if (!bassEnabled) return;
+            notes.push(note);
+            playNote(note);
+        } else if ((command === noteOff || (command === noteOn && value === 0))) {
+          if (!sustained) {
+            notes.splice(notes.indexOf(note), 1);
+            stopNote();
+          } else {
+            sustainedNotes.push(note);
+          }
+        }
+        
       };
     });
   });
@@ -156,13 +195,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const attackTime = 0.1;
 
   const notes = [];
-
+  const sustainedNotes = [];
+  
   function getMaxNote() {
     return 60 - (Number(bassOctaveSelect.value)) * 12
   }
 
   function updateOscillatorFrequency() {
-    const lowestNote = Math.min(...notes);
+    const lowestNote = Math.min(...notes, ...sustainedNotes);
     if (lowestNote < getMaxNote()) {
       oscillator.frequency.setValueAtTime(
         midiNoteToFrequency(lowestNote),
@@ -172,9 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function playNote(note) {
-    if (!bassEnabled) return;
-
-    notes.push(note);
+  
     if (note >= getMaxNote()) return;
 
     const currentTime = audioContext.currentTime;
@@ -184,11 +222,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateOscillatorFrequency();
   }
 
-  function stopNote(note) {
-    notes.splice(notes.indexOf(note), 1);
+  function stopNote() {
     const currentTime = audioContext.currentTime;
 
-    if (notes.length === 0) {
+    if (notes.length === 0 && sustainedNotes.length === 0) {
       bassGain.gain.cancelScheduledValues(currentTime);
       bassGain.gain.setValueAtTime(bassGain.gain.value, currentTime);
       bassGain.gain.linearRampToValueAtTime(0, currentTime + releaseTime);

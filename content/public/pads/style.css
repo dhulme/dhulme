@@ -71,6 +71,7 @@ button.selected {
 main {
   max-width: 25rem;
   flex-grow: 1;
+  position: relative;
 }
 h1 {
   font-style: italic;
@@ -87,4 +88,13 @@ h1 {
 }
 .flex div {
   width: 100%;
+}
+
+#loadingIndicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  font-style: italic;
+  display: none;
 }
