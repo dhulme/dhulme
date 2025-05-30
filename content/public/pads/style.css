@@ -4,7 +4,7 @@ html, body {
   color: white;
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   justify-content: center;
   align-items: center;
   overscroll-behavior: none;

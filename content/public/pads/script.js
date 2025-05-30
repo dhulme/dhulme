@@ -95,9 +95,21 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingIndicator.style.display = 'none';
   });
 
+  let receivingMidi = false;
+  setInterval(() => {
+    if (receivingMidi) {
+      midiButton.classList.add('selected');
+    } else {
+      midiButton.classList.remove('selected');
+    }
+    receivingMidi = false;
+  }, 500)
   function onMidiMessage(message) {
     const [command, key, value] = message.data;
-    if (command === 254) return;
+    if (command === 254) {
+      receivingMidi = true;
+      return; // Ignore MIDI active sensing messages
+    };
     // console.log('MIDI message:', message.data);
     const handlers = {
       176: onControlChange,
@@ -108,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   async function initMidi() {
     const midi = await navigator.requestMIDIAccess();
-    midiButton.classList.add('selected');
     midi.inputs.forEach((input) => {
       input.onmidimessage = onMidiMessage;
     });
@@ -170,11 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  navigator.permissions.query({ name: 'midi' }).then((result) => {
-    if (result.state === 'granted') {
-      midiButton.classList.add('selected');
-    }
-  });
   midiButton.addEventListener('click', initMidi);
 
   let bassEnabled = false;
