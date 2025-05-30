@@ -31,6 +31,7 @@ input[type='range'] {
   appearance: none;
   background: none;
   writing-mode: vertical-lr;
+  margin-bottom: 0.25rem;
 }
 input[type='range']::-webkit-slider-runnable-track {
   width: 100%;
@@ -97,4 +98,20 @@ h1 {
   color: white;
   font-style: italic;
   display: none;
+}
+
+#midiButton {
+  position: absolute;
+  top: 0.25rem;
+  left: 0;
+  width: 4rem;
+  height: 2rem;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  color: gray;
+  font-style: italic;
 }

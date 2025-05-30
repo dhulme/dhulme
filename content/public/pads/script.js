@@ -1,30 +1,14 @@
-const noteOff = 128; // Channel 1
-const noteOn = 144; // Channel 1
-const sustain = 176; // Channel 1
-
-function getHpfFrequency(value) {
-  const minValue = 20;
-  const maxValue = 20000;
-  return (
-    Math.exp((1 - value) * Math.log(maxValue / minValue)) *
-    minValue
-  );
-}
-
 function getLpfFrequency(value) {
   const minValue = 20;
   const maxValue = 20000;
-  return (
-    Math.exp((1 - value) * Math.log(maxValue / minValue)) *
-    minValue
-  );
+  return Math.exp((1 - value) * Math.log(maxValue / minValue)) * minValue;
 }
 
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
     navigator.wakeLock.request('screen');
   }
-});    
+});
 
 navigator.wakeLock.request('screen');
 
@@ -33,13 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const padTypeSelect = document.getElementById('padTypeSelect');
   const padKeySelect = document.getElementById('padKeySelect');
   const bassOctaveSelect = document.getElementById('bassOctaveSelect');
-  const padHpfControl = document.getElementById('padHpfControl');
   const padLpfControl = document.getElementById('padLpfControl');
   const bassLpfControl = document.getElementById('bassLpfControl');
   const padVolumeControl = document.getElementById('padVolumeControl');
+  const bassVolumeControl = document.getElementById('bassVolumeControl');
   const playButton = document.getElementById('playButton');
   const bassButton = document.getElementById('bassButton');
   const loadingIndicator = document.getElementById('loadingIndicator');
+  const midiButton = document.getElementById('midiButton');
 
   const audioContext = new AudioContext();
 
@@ -53,21 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
   padLpf.type = 'lowpass';
   padLpf.frequency.value = getLpfFrequency(padLpfControl.value);
 
-  const padHpf = audioContext.createBiquadFilter();
-  padHpf.type = 'highpass';
-  padHpf.frequency.value = getHpfFrequency(padHpfControl.value);
-
   const padGain = audioContext.createGain();
   padGain.gain.value = 1;
+
+  const bassGain2 = audioContext.createGain();
+  bassGain2.gain.value = 0.5;
 
   const bassLpf = audioContext.createBiquadFilter();
   bassLpf.type = 'lowpass';
   bassLpf.frequency.value = getLpfFrequency(bassLpfControl.value);
 
-  padSource.connect(padHpf);
-  padHpf.connect(padLpf);
+  padSource.connect(padLpf);
   padLpf.connect(padGain);
   padGain.connect(masterGain);
+
+  const notes = [];
+  const sustainedNotes = [];
 
   function resumeAudioContext() {
     if (audioContext.state === 'suspended') {
@@ -109,58 +95,105 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingIndicator.style.display = 'none';
   });
 
-  let bassEnabled = false;
+  function onMidiMessage(message) {
+    const [command, key, value] = message.data;
+    if (command === 254) return;
+    // console.log('MIDI message:', message.data);
+    const handlers = {
+      176: onControlChange,
+      144: onNoteOn,
+      128: onNoteOff,
+    };
+    handlers[command](key, value);
+  }
+  async function initMidi() {
+    const midi = await navigator.requestMIDIAccess();
+    midiButton.classList.add('selected');
+    midi.inputs.forEach((input) => {
+      input.onmidimessage = onMidiMessage;
+    });
+  }
+  initMidi();
+
   let sustained = false;
+  function onControlChange(key, value) {
+    const handlers = {
+      // Pad LPF control
+      18: () => {
+        padLpfControl.value = 1 - value / 127;
+        padLpf.frequency.value = getLpfFrequency(padLpfControl.value);
+      },
+      // Bass LPF control
+      19: () => {
+        bassLpfControl.value = 1 - value / 127;
+        bassLpf.frequency.value = getLpfFrequency(bassLpfControl.value);
+      },
+      // Sustain
+      64: () => {
+        const pedalDown = value > 0;
+        if (pedalDown && !sustained) {
+          sustained = true;
+        } else if (!pedalDown && sustained) {
+          sustained = false;
+          // Release all sustained notes
+          while (sustainedNotes.length > 0) {
+            const note = sustainedNotes.pop();
+            const index = notes.indexOf(note);
+            if (index !== -1) notes.splice(index, 1);
+          }
+          stopNote();
+        }
+      },
+    }
+    if (handlers[key]) {
+      handlers[key]();
+    } else {
+      console.warn(`Unhandled control change: ${key} with value ${value}`);
+    }
+  }
+  function onNoteOn(note, value) {
+    if (value === 0 || !bassEnabled) {
+      onNoteOff(note, value);
+      return;
+    }
+    if (!notes.includes(note)) notes.push(note);
+    playNote(note);
+  }
+  function onNoteOff(note, value) {
+    const index = notes.indexOf(note);
+    if (index !== -1) notes.splice(index, 1);
+
+    if (sustained && !sustainedNotes.includes(note)) {
+      sustainedNotes.push(note);
+    } else {
+      stopNote();
+    }
+  }
+
+  navigator.permissions.query({ name: 'midi' }).then((result) => {
+    if (result.state === 'granted') {
+      midiButton.classList.add('selected');
+    }
+  });
+  midiButton.addEventListener('click', initMidi);
+
+  let bassEnabled = false;
   bassButton.addEventListener('click', async () => {
     bassEnabled = !bassEnabled;
     resumeAudioContext();
-
     bassButton.classList[bassEnabled ? 'add' : 'remove']('selected');
-
-    const midi = await navigator.requestMIDIAccess();
-    midi.inputs.forEach((input) => {
-      input.onmidimessage = (message) => {
-        const [command, note, value] = message.data;
-        // console.log(notes);
-        // if (!note) return;
-        if (command === sustain) {
-          sustained = value > 0;
-          console.log('notes', notes);
-          console.log(`sustainedNotes`, sustainedNotes);
-          if (!sustained) {
-            sustainedNotes.length = 0;
-            stopNote();
-          }
-        }
-        if (command === noteOn && value > 0) {
-            if (!bassEnabled) return;
-            notes.push(note);
-            playNote(note);
-        } else if ((command === noteOff || (command === noteOn && value === 0))) {
-          if (!sustained) {
-            notes.splice(notes.indexOf(note), 1);
-            stopNote();
-          } else {
-            sustainedNotes.push(note);
-          }
-        }
-        
-      };
-    });
-  });
-
-  padHpfControl.addEventListener('input', () => {
-    padHpf.frequency.value = getHpfFrequency(padHpfControl.value);
-  });
-
-  padLpfControl.addEventListener('input', () => {
-    padLpf.frequency.value = getLpfFrequency(padLpfControl.value);
   });
 
   padVolumeControl.addEventListener('input', () => {
     padGain.gain.value = 1 - padVolumeControl.value;
   });
+  padLpfControl.addEventListener('input', () => {
+    padLpf.frequency.value = getLpfFrequency(padLpfControl.value);
+  });
 
+  bassVolumeControl.addEventListener('input', () => {
+    bassGain2.gain.value = 1 - bassVolumeControl.value;
+  });
   bassLpfControl.addEventListener('input', () => {
     bassLpf.frequency.value = getLpfFrequency(bassLpfControl.value);
   });
@@ -186,7 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
   oscillator.type = 'sawtooth';
 
   oscillator.connect(bassGain);
-  bassGain.connect(bassLpf);
+  bassGain.connect(bassGain2);
+  bassGain2.connect(bassLpf);
   bassLpf.connect(masterGain);
 
   oscillator.start();
@@ -194,15 +228,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const releaseTime = 0.1;
   const attackTime = 0.1;
 
-  const notes = [];
-  const sustainedNotes = [];
-  
   function getMaxNote() {
-    return 60 - (Number(bassOctaveSelect.value)) * 12
+    return 60 - Number(bassOctaveSelect.value) * 12;
   }
 
   function updateOscillatorFrequency() {
-    const lowestNote = Math.min(...notes, ...sustainedNotes);
+    const lowestNote = Math.min(...notes);
     if (lowestNote < getMaxNote()) {
       oscillator.frequency.setValueAtTime(
         midiNoteToFrequency(lowestNote),
@@ -212,7 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function playNote(note) {
-  
     if (note >= getMaxNote()) return;
 
     const currentTime = audioContext.currentTime;
