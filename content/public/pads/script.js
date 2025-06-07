@@ -62,8 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let playing = false;
+  padTypeSelect.addEventListener('change', () => {
+    if (playing) {
+      playButton.classList.add('playing');
+    }
+  });
+  padKeySelect.addEventListener('change', () => {
+    if (playing) {
+      playButton.classList.add('playing');
+    }
+  });
+
   playButton.addEventListener('click', () => {
-    const audioSrc = padTypeSelect.value + '/' + padKeySelect.value;
+    const audioSrc = `pads/${padTypeSelect.value}/${padKeySelect.value}.ogg`;
+    playButton.classList.remove('playing');
     if (!audioElement.src.includes(audioSrc)) {
       audioElement.src = audioSrc;
       resumeAudioContext();
@@ -96,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   let receivingMidi = false;
+  let sustained = false;
   setInterval(() => {
     if (receivingMidi) {
       midiButton.classList.add('selected');
@@ -123,10 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
     midi.inputs.forEach((input) => {
       input.onmidimessage = onMidiMessage;
     });
+    sustained = false;
+    notes.length = 0;
+    sustainedNotes.length = 0;
+    stopNote();
   }
   initMidi();
 
-  let sustained = false;
   function onControlChange(key, value) {
     const handlers = {
       // Pad LPF control

@@ -115,3 +115,8 @@ footer {
   color: gray;
   font-style: italic;
 }
+
+#playButton.playing {
+  background: rgba(255, 255, 255, 0.7);
+  color: black;
+}
