@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Pads</title>
-    <link rel="icon" type="image/svg+xml" href="piano.svg">
-    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="piano.svg" />
+    <link rel="manifest" href="manifest.json" />
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -40,14 +40,22 @@
           </select>
         </div>
       </div>
-      <label for="bassOctaveSelect">Bass Octave</label>
-      <select id="bassOctaveSelect">
-        <option value="-2">-2</option>
-        <option value="-1">-1</option>
-        <option value="0" selected>0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-      </select>
+      <div class="flex">
+        <div>
+          <label for="bassOctaveSelect">Bass Octave</label>
+          <select id="bassOctaveSelect">
+            <option value="-2">-2</option>
+            <option value="-1">-1</option>
+            <option value="0" selected>Default</option>
+            <option value="1">+1</option>
+            <option value="2">+2</option>
+          </select>
+        </div>
+        <div>
+          <label for="bassSplitNoteInput">Bass Split</label>
+          <input type="text" id="bassSplitNoteInput" value="C4" readonly />
+        </div>
+      </div>
       <audio id="audio" controls></audio>
       <div class="flex">
         <button id="playButton">Play / Pause</button>
@@ -99,9 +107,7 @@
           />
         </div>
       </div>
-      <footer>
-        v2.2 - David Hulme - 2025
-      </footer>
+      <footer>v2.3 - David Hulme - 2025</footer>
     </main>
   </body>
 </html>
