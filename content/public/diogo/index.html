@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorry You're Leaving, Diogo!</title>
+    <style>
+      body {
+        background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: #1565c0;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #ffffffcc;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(21, 101, 192, 0.08);
+        padding: 32px 24px 24px 24px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 2.2em;
+        margin-bottom: 0.5em;
+        color: #1976d2;
+      }
+      .subtitle {
+        text-align: center;
+        font-size: 1.2em;
+        margin-bottom: 2em;
+        color: #2196f3;
+      }
+      .card {
+        background: #e3f2fd;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        padding: 18px 20px;
+        box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
+        transition: box-shadow 0.2s;
+      }
+      .card:hover {
+        box-shadow: 0 4px 16px rgba(33, 150, 243, 0.13);
+      }
+      .message {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        color: #1565c0;
+      }
+      .name {
+        text-align: right;
+        font-style: italic;
+        color: #1976d2;
+      }
+      @media (max-width: 700px) {
+        .container {
+          margin: 16px;
+          padding: 16px 8px 12px 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sorry You're Leaving, Diogo!</h1>
+      <div class="subtitle">Wishing you all the best from your team 💙</div>
+      <div id="messages"></div>
+    </div>
+    <script>
+      const messages = [
+        {
+          message:
+            "Working with you has been a genuine pleasure. Best of luck with both the new role and the new house - exciting times ahead!",
+          name: "Callum",
+        },
+        {
+          message:
+            "I was saddened to hear that you’re leaving, but I hope you’re moving on to bigger and better things. I will miss our little chats about the highs and lows of fatherhood, and your belief that I’m younger than I actually am! 😉 I wish you and your family all the best for the future. Take care.",
+          name: "Andrew",
+        },
+        {
+          message:
+            "It’s been great working with you, best wishes for the future!",
+          name: "Bryn",
+        },
+        {
+          message:
+            "Hi Diogo, it was a pleasure working with you! Your energy and enthusiasm were great to see, and we’ll really miss you. All the best for your next role and I hope our paths cross again before too long. It’s a small world :)",
+          name: "Simon",
+        },
+        {
+          message: 'Its been a pleasure working with you Diogo, I have learnt a lot from you, I wish you the best in your new chapter',
+          name: 'Jude'
+        }, {
+          message: "It's been great to have been part of your journey over the past few years. I'm sad that things have come to an end, but I know you'll be doing great things in your new role. Thank you for all the time and energy you've invested in our team and product.",
+          name: "Dave"
+        },
+        {
+          message: 'Wishing you the best of luck in your next chapter Diogo! Take care 😊',
+          name: 'Sian'
+        }, {
+          message: 'Great working with you and getting to know you a little.  Best of luck with your next career step, and thanks very much for all your hard work and contributions to WFM.  You’ll be missed!',
+          name: 'Nick'
+        }, {
+          message: 'Thank you for several pieces of sage advice, it was always a pleasure working with you. All the best for the future!',
+          name: 'Tom'
+        }, {
+          message: 'Your development skills and great personality will be missed. Especially your cheeky trunk based development MRs 😉. All the best going forward.',
+          name: 'Remi'
+        }, {
+          message: "Hey Diogo, Wishing you all the best in your next chapter — it's been a pleasure working with you!",
+          name: 'Haroon'
+        },
+        {
+          message: 'Wishing you all the best with your next endeavours!',
+          name: 'Torie'
+        }
+      ];
+
+      // Shuffle messages array using Fisher-Yates algorithm
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+      shuffle(messages);
+
+      const messagesDiv = document.getElementById("messages");
+      messages.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+                      <div class="message">${item.message}</div>
+                      <div class="name">- ${item.name}</div>
+                  `;
+        messagesDiv.appendChild(card);
+      });
+    </script>
+  </body>
+</html>
