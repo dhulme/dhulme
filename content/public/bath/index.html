@@ -146,7 +146,9 @@
       }
 
       function resetCounter() {
-        localStorage.setItem('lastBath', Date.now());
+        const date = new Date();
+        date.setHours(0, 0, 0, 0); // Set to start of the day
+        localStorage.setItem('lastBath', date.getTime());
         document.getElementById('dayCount').textContent = '0';
         popBubbles();
       }
