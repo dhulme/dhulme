@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorry You're Leaving, João!</title>
+    <style>
+      body {
+        background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: #1b3c1a;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #f1f8e9cc;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(46, 125, 50, 0.08);
+        padding: 32px 24px 24px 24px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 2.2em;
+        margin-bottom: 0.5em;
+        color: #145a32;
+      }
+      .subtitle {
+        text-align: center;
+        font-size: 1.2em;
+        margin-bottom: 2em;
+        color: #256029;
+      }
+      .card {
+        background: #c8e6c9;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        padding: 18px 20px;
+        box-shadow: 0 2px 8px rgba(67, 160, 71, 0.07);
+        transition: box-shadow 0.2s;
+      }
+      .card:hover {
+        box-shadow: 0 4px 16px rgba(67, 160, 71, 0.13);
+      }
+      .message {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        color: #1b3c1a;
+      }
+      .name {
+        text-align: right;
+        font-style: italic;
+        color: #145a32;
+      }
+      @media (max-width: 700px) {
+        .container {
+          margin: 16px;
+          padding: 16px 8px 12px 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sorry You're Leaving, João!</h1>
+      <div class="subtitle">Wishing you all the best from your team 💚</div>
+      <div id="messages"></div>
+    </div>
+    <script>
+      const messages = [
+        {
+          name: 'Dinis',
+          message:
+            'João, wish all the best in your new endeavor. Cheers, mate!',
+        },
+        {
+          name: 'Arthur',
+          message:
+            'Thank you for being so supportive and patient every time we worked together, EF would still be a mystery to me if not for you. I wish you luck where ever you are headed to next!',
+        },
+        {
+          name: 'Shay',
+          message:
+            'Thanks for your help wrestling Entity Framework over the last 2 years! Wishing you all the best for your future role.',
+        },
+        {
+          name: 'Bryn',
+          message:
+            'It’s been great working with you, best wishes for the future',
+        },
+        {
+          name: 'Torie',
+          message:
+            'Wishing you the very best with your next endeavours! Thanks for all your hard work',
+        },
+        {
+          name: 'Jude',
+          message:
+            'Its been a pleasure working and learning from you Joao, I wish you the best in your career, also thank you for making me feel welcomed when I visited the Porto office',
+        },
+        {
+          name: 'Bruno',
+          message:
+            'It was great working with you. You were always a big help and a great colleague. All the best for what’s next!',
+        },
+        {
+          name: 'Remi',
+          message:
+            'Good luck with you future endeavours Joao, been a pleasure working with you.',
+        },
+        {
+          name: 'Niculae',
+          message:
+            'Thank you João for being a great team member, it was a pleasure to work with you. All the best for the future!',
+        },
+        {
+          name: 'Dave',
+          message: `Thank you for all your contributions to the team João, particularly helping others solve technical problems. We'll all miss you! Hope your new role goes really well.`,
+        },
+        {
+          name: 'Nick',
+          message:
+            'João, thanks for all your hard work on WFM.  You’ve made a big contribution, especially towards the team hitting our big milestone.  You will be missed, I hope you have some pride in what you and the WFM team have achieved.  I have valued working with you, and appreciated being looked after when I visited Porto last year.  Very best of luck in your future endeavours!',
+        },
+        {
+          name: 'Callum',
+          message: 'It was a pleasure getting to know you and working with you in your time here João. Best of luck in your new role!'
+        },
+        {
+          name: 'Tom',
+          message: 'Thanks for all that you taught me João, especially very early on in my new role. It was a pleasure working with you and I wish you all the best!'
+        }
+      ];
+
+      // Shuffle messages array using Fisher-Yates algorithm
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+      shuffle(messages);
+
+      const messagesDiv = document.getElementById('messages');
+      messages.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+                      <div class="message">${item.message}</div>
+                      <div class="name">- ${item.name}</div>
+                  `;
+        messagesDiv.appendChild(card);
+      });
+    </script>
+  </body>
+</html>
