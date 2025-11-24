@@ -25,18 +25,22 @@
   </head>
   <body>
     <div id="daysToGo"></div>
+    <div id="daysTil37Weeks"></div>
     <div>Days to go</div>
 
     <div id="weekContainer"><span id="weeks"></span> weeks</div>
 
     <script>
       const endDate = new Date('2026-03-02');
+      const endDate37Weeks = new Date('2026-02-09');
       const startDate = new Date('2025-05-26');
       const daysToGoElement = document.getElementById('daysToGo');
       const weeksElement = document.getElementById('weeks');
+      const daysTil37WeeksElement = document.getElementById('daysTil37Weeks');
       const today = new Date();
       daysToGoElement.textContent = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
       weeksElement.textContent = Math.ceil((today - startDate) / (1000 * 60 * 60 * 24 * 7)) - 1;
+      daysTil37WeeksElement.textContent = Math.ceil((endDate37Weeks - today) / (1000 * 60 * 60 * 24));
 
     </script>
   </body>
