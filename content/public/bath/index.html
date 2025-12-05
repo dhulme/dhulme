@@ -91,6 +91,39 @@
           opacity: 0;
         }
       }
+
+      .bed-indicator {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%);
+        border-radius: 15px;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 600;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.5s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #bedAnswer {
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
     </style>
   </head>
   <body>
@@ -102,6 +135,9 @@
       <button class="bath-button" onclick="resetCounter()">
         Have a bath! 🛁
       </button>
+      <div id="bedIndicator" style="display: none;" class="bed-indicator">
+        Change the bed? <span id="bedAnswer"></span>
+      </div>
     </div>
 
     <script>
@@ -149,6 +185,22 @@
         const date = new Date();
         date.setHours(0, 0, 0, 0); // Set to start of the day
         localStorage.setItem('lastBath', date.getTime());
+        
+        // Increment bath count
+        let bathCount = parseInt(localStorage.getItem('bathCount') || '0');
+        bathCount++;
+        localStorage.setItem('bathCount', bathCount);
+        
+        // Show bed indicator and alternate between Yes and No on each press
+        const bedIndicator = document.getElementById('bedIndicator');
+        const answer = bathCount % 2 === 1 ? 'Yes' : 'No';
+        document.getElementById('bedAnswer').textContent = answer;
+        bedIndicator.style.display = 'flex';
+        // Hide after 5 seconds
+        setTimeout(() => {
+          bedIndicator.style.display = 'none';
+        }, 5000);
+        
         document.getElementById('dayCount').textContent = '0';
         popBubbles();
       }
