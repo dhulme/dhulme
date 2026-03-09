@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Standup</title>
@@ -52,7 +52,7 @@
         margin: 0.1rem;
         transition: background 0.2s;
       }
-      button:focus {
+      button.selected {
         outline: 3px solid #9399f5;
       }
       button svg {
@@ -138,7 +138,10 @@
       <ul>
         <template x-for="member in displayedMembers">
           <li :class="member.history && 'history'">
-            <button class="photo-button">
+            <button
+              :class="selectedMember === member ? 'photo-button selected' : 'photo-button'"
+              @click="selectMember(member)"
+            >
               <template x-if="member.svg"
                 ><div x-html="member.svg" class="photo"></div
               ></template>
@@ -241,7 +244,7 @@
     <script>
       document.addEventListener('alpine:init', () => {
         Alpine.data('main', () => ({
-          selectedTeam: localStorage.getItem('team') || 'WFM',
+          selectedTeam: localStorage.getItem('team') || 'WFM Dev',
           teams,
           ignoredNamesString: localStorage.getItem('ignore') || '',
           shuffledMembers: [],
@@ -251,6 +254,8 @@
           historyVisible: localStorage.getItem('historyVisible') === 'true',
           copTla: '',
           copVisible: false,
+          selectedMember: null,
+          initialized: false,
           inputSubmit(event) {
             event.preventDefault();
             this.shuffle();
@@ -263,8 +268,8 @@
               ...this.filteredMembers.filter((member) => member.atTop),
               ..._.shuffle(
                 this.filteredMembers.filter(
-                  (member) => !member.atBottom && !member.atTop
-                )
+                  (member) => !member.atBottom && !member.atTop,
+                ),
               ),
               ...this.filteredMembers.filter((member) => member.atBottom),
             ];
@@ -279,7 +284,7 @@
               .split(',')
               .map((name) => name.trim());
             return this.team.members.filter(
-              (member) => !ignoredNames.includes(member.tla) && !member.history
+              (member) => !ignoredNames.includes(member.tla) && !member.history,
             );
           },
           get historyMembers() {
@@ -311,10 +316,36 @@
             localStorage.setItem('historyVisible', this.historyVisible);
           },
           init() {
+            if (this.initialized) return;
+            this.initialized = true;
             this.shuffle();
+            window.addEventListener('keydown', (event) => {
+              if (event.code === 'Space') {
+                event.preventDefault();
+                this.selectNextMember();
+              }
+            });
           },
           loadAlternateImage(element) {
             element.target.src = element.target.src.replace('svg', 'png');
+          },
+          selectMember(member) {
+            this.selectedMember = member;
+            window.dispatchEvent(
+              new CustomEvent('update-jira-id', {
+                detail: { jiraId: member.jiraId },
+              }),
+            );
+          },
+          selectNextMember() {
+            if (this.displayedMembers.length === 0) return;
+            
+            let nextIndex = 0;
+            if (this.selectedMember) {
+              const currentIndex = this.displayedMembers.indexOf(this.selectedMember);
+              nextIndex = (currentIndex + 1) % this.displayedMembers.length;
+            }
+            this.selectMember(this.displayedMembers[nextIndex]);
           },
         }));
       });
