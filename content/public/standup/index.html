@@ -52,9 +52,6 @@
         margin: 0.1rem;
         transition: background 0.2s;
       }
-      button.selected {
-        outline: 3px solid #9399f5;
-      }
       button svg {
         position: relative;
         z-index: 1;
@@ -112,9 +109,8 @@
         padding: 0;
         background: #fff;
       }
-      main.dark .photo-button:hover,
-      .photo-button:hover,
-      .photo-button:focus {
+      .photo-button:focus,
+      .photo-button.selected {
         outline: 4px solid #9399f5;
         background: #fff;
       }
@@ -336,6 +332,28 @@
                 detail: { jiraId: member.jiraId },
               }),
             );
+            
+            // Auto-scroll functionality for members near the bottom
+            this.$nextTick(() => {
+              const memberIndex = this.displayedMembers.indexOf(member);
+              const memberElement = document.querySelectorAll('ul li')[memberIndex];
+              
+              if (memberElement) {
+                const rect = memberElement.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const controlsHeight = document.querySelector('.controls').offsetHeight;
+                const visibleBottom = viewportHeight - controlsHeight;
+                
+                // Check if member is in the bottom 30% of the visible area
+                const bottomThreshold = visibleBottom * 0.7;
+                
+                if (rect.top > bottomThreshold && rect.top < visibleBottom) {
+                  // Scroll to reveal next members
+                  const scrollAmount = viewportHeight * 0.5; // Scroll half a viewport
+                  window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                }
+              }
+            });
           },
           selectNextMember() {
             if (this.displayedMembers.length === 0) return;
