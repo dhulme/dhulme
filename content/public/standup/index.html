@@ -73,7 +73,7 @@
         position: relative;
       }
       ul li:last-child {
-        margin-bottom: 4rem;
+        margin-bottom: 0.5rem;
       }
       .controls {
         position: fixed;
@@ -182,7 +182,7 @@
         font-weight: 300;
         margin-bottom: 0.25rem;
       }
-      .modal input[type="text"] {
+      .modal textarea {
         width: 100%;
         padding: 0.4rem;
         margin-bottom: 0.75rem;
@@ -191,8 +191,10 @@
         font-weight: 300;
         border: 1px solid #ccc;
         border-radius: 0.25rem;
+        resize: vertical;
+        min-height: 3rem;
       }
-      main.dark .modal input[type="text"] {
+      main.dark .modal textarea {
         background: #333;
         color: white;
         border-color: #555;
@@ -241,14 +243,7 @@
         </template>
       </ul>
       <div class="reminders-section">
-        <h3>
-          Reminders
-          <button @click="refreshReminders" aria-label="Refresh reminders">
-            <svg style="width: 20px; height: 20px" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z" />
-            </svg>
-          </button>
-        </h3>
+        <h3>Reminders</h3>
         <div class="day-label" x-text="currentDayName"></div>
         <template x-for="reminder in todayReminders">
           <div class="reminder-item" x-text="reminder"></div>
@@ -262,7 +257,7 @@
           <template x-for="day in reminderDays" :key="day">
             <div>
               <label x-text="day"></label>
-              <input type="text" :value="reminders[day]" @input="reminders[day] = $event.target.value" :placeholder="`Reminder for ${day}`" />
+              <textarea :value="reminders[day]" @input="reminders[day] = $event.target.value" :placeholder="`Reminder for ${day}`" rows="2"></textarea>
             </div>
           </template>
           <button class="modal-close" @click="closeRemindersModal">Close</button>
@@ -288,7 +283,7 @@
           </button>
           <button @click="remindersModalVisible = true" aria-label="Reminders">
             <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M9,13V18H7V13H9M15,15V18H13V15H15M11,11V18H13V11H11" />
+              <path fill="currentColor" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21" />
             </svg>
           </button>
           <button @click="toggleHistory">
@@ -369,7 +364,7 @@
           },
           get todayReminders() {
             const text = (this.reminders[this.currentDayName] || '').trim();
-            return text ? text.split(',').map(r => r.trim()).filter(Boolean) : [];
+            return text ? text.split('\n').map(r => r.trim()).filter(Boolean) : [];
           },
           closeRemindersModal() {
             localStorage.setItem('reminders', JSON.stringify(this.reminders));
@@ -386,6 +381,7 @@
             localStorage.setItem('ignore', this.ignoredNamesString);
           },
           shuffle() {
+            this.reminders = JSON.parse(localStorage.getItem('reminders') || '{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":""}');
             this.shuffledMembers = [
               ...this.filteredMembers.filter((member) => member.atTop),
               ..._.shuffle(
@@ -442,7 +438,7 @@
             this.initialized = true;
             this.shuffle();
             window.addEventListener('keydown', (event) => {
-              if (event.code === 'Space') {
+              if (event.code === 'Space' && !this.remindersModalVisible) {
                 event.preventDefault();
                 this.selectNextMember();
               }
