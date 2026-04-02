@@ -357,21 +357,23 @@
           selectedMember: null,
           initialized: false,
           remindersModalVisible: false,
-          reminderDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-          reminders: JSON.parse(localStorage.getItem('reminders') || '{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":""}'),
+          reminderDays: ['Every day', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          reminders: JSON.parse(localStorage.getItem('reminders') || '{"Every day":"","Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":""}'),
           get currentDayName() {
             return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];
           },
           get todayReminders() {
-            const text = (this.reminders[this.currentDayName] || '').trim();
-            return text ? text.split('\n').map(r => r.trim()).filter(Boolean) : [];
+            const everyDay = (this.reminders['Every day'] || '').trim();
+            const today = (this.reminders[this.currentDayName] || '').trim();
+            const combined = [everyDay, today].filter(Boolean).join('\n');
+            return combined ? combined.split('\n').map(r => r.trim()).filter(Boolean) : [];
           },
           closeRemindersModal() {
             localStorage.setItem('reminders', JSON.stringify(this.reminders));
             this.remindersModalVisible = false;
           },
           refreshReminders() {
-            this.reminders = JSON.parse(localStorage.getItem('reminders') || '{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":""}');
+            this.reminders = JSON.parse(localStorage.getItem('reminders') || '{"Every day":"","Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":""}');
           },
           inputSubmit(event) {
             event.preventDefault();
@@ -381,7 +383,7 @@
             localStorage.setItem('ignore', this.ignoredNamesString);
           },
           shuffle() {
-            this.reminders = JSON.parse(localStorage.getItem('reminders') || '{"Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":""}');
+            this.reminders = JSON.parse(localStorage.getItem('reminders') || '{"Every day":"","Monday":"","Tuesday":"","Wednesday":"","Thursday":"","Friday":""}');
             this.shuffledMembers = [
               ...this.filteredMembers.filter((member) => member.atTop),
               ..._.shuffle(
